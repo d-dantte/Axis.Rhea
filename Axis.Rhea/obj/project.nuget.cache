@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "9+TqnWf+c7KoPbVfrTuS7CMWAmu8DCFF5Fwk1A6FNU/IB1fG2yWjqxEdPSAAvkFBnrYp8+lymVnNFRKw+plojA==",
+  "success": true,
+  "projectFilePath": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
