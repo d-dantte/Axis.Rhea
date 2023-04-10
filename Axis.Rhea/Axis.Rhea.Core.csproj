@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Description>Simple</Description>
+    <Company>Axiis</Company>
+    <Authors>Dantte</Authors>
+    <LangVersion>latest</LangVersion>
+    <PackageProjectUrl>https://github.com/d-dantte/Axis.Rhea</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/d-dantte/Axis.Rhea</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Workflow\State\StateQuery-2.xbnf" />
+    <None Remove="Workflow\State\StateQuery.xbnf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Workflow\State\StateQuery.xbnf" />
+    <EmbeddedResource Include="Workflow\State\StateQuery-2.xbnf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="App\" />
+    <Folder Include="Comms\" />
+    <Folder Include="DataStore\" />
+    <Folder Include="Notification\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Akka" Version="1.5.1" />
+    <PackageReference Include="Axis.Ion" Version="0.0.2" />
+    <PackageReference Include="Axis.Luna.Common" Version="6.0.6" />
+    <PackageReference Include="Axis.Luna.Extensions" Version="6.0.6" />
+    <PackageReference Include="Axis.Pulsar.Grammar" Version="0.7.7" />
+    <PackageReference Include="Axis.Pulsar.Languages" Version="0.7.7" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.5.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>

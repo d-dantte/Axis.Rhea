@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea", "Axis.Rhea\Axis.Rhea.csproj", "{4A073707-08AD-4E68-A645-23E668093942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axis.Rhea.Core", "Axis.Rhea\Axis.Rhea.Core.csproj", "{4A073707-08AD-4E68-A645-23E668093942}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".items", ".items", "{2C053A88-8B0C-49F1-9E57-BE507497E026}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EB591738-BFED-44FC-AF1A-ADE951840139}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4C6C36A6-A6CA-4F83-B663-FF3556C204F8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axis.Rhea.Core.Tests", "Axis.Rhea.Core.Tests\Axis.Rhea.Core.Tests.csproj", "{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.ActorSystem", "Axis.Rhea.ActorSystem\Axis.Rhea.ActorSystem.csproj", "{B0B67338-40F5-4207-BCEF-C985641E5E55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,22 @@ Global
 		{4A073707-08AD-4E68-A645-23E668093942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A073707-08AD-4E68-A645-23E668093942}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A073707-08AD-4E68-A645-23E668093942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A073707-08AD-4E68-A645-23E668093942} = {EB591738-BFED-44FC-AF1A-ADE951840139}
+		{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D} = {4C6C36A6-A6CA-4F83-B663-FF3556C204F8}
+		{B0B67338-40F5-4207-BCEF-C985641E5E55} = {EB591738-BFED-44FC-AF1A-ADE951840139}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76C7EE4D-E230-4CB9-B61F-0B49A3460106}
