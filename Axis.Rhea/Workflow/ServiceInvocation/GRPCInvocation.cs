@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Axis.Rhea.Core.Workflow.ServiceInvocation
 {
@@ -18,5 +14,16 @@ namespace Axis.Rhea.Core.Workflow.ServiceInvocation
         public StateSelector DataSource => throw new NotImplementedException();
 
         public RetryPolicy RetryPolicy => throw new NotImplementedException();
+
+        #region Nested types
+
+        /// <summary>
+        /// Builds the <see cref="GRPCInvocation"/> instance
+        /// </summary>
+        public class Builder
+        {
+
+        }
+        #endregion
     }
 }

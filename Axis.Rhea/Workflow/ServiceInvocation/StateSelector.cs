@@ -22,10 +22,10 @@ namespace Axis.Rhea.Core.Workflow.ServiceInvocation
                 .ToImmutableList();
         }
 
-        public IonStruct Select(IonStruct state)
+        public IonStruct Pick(IonStruct state)
         {
             return RootSegments
-                .SelectMany(segment => segment.Select(state))
+                .SelectMany(segment => segment.Pick(state))
                 .ApplyTo(Merge);
         }
 

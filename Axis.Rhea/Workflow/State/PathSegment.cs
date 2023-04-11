@@ -36,7 +36,15 @@ namespace Axis.Rhea.Core.Workflow.State
         {
         }
 
-        public IEnumerable<IPathSelection> Select(IIonType value)
+        /// <summary>
+        /// Find and copy (pick) all data along this path and it's child paths that fit the corresponding predicates,
+        /// returning the objects at the start of the object graph.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public IEnumerable<IPathSelection> Pick(IIonType value)
         {
             if (value is null)
                 throw new ArgumentNullException(nameof(value));
@@ -62,11 +70,56 @@ namespace Axis.Rhea.Core.Workflow.State
             };
         }
 
+        /// <summary>
+        /// Continuously drill down through the object graph, following the path segments, and return the data that
+        /// matches the final predicate.
+        /// </summary>
+        /// <param name="value">the data to test predicates on</param>
+        /// <returns>The data that fits all predicates, or an empty enumerable</returns>
+        public IEnumerable<IPathSelection> Select(IIonType value)
+        {
+            var paths = Paths().ToArray();
+            var seedSelection = new IPathSelection[] { new PropertyPathSelection("$user", value) };
+            return paths.Aggregate(seedSelection, (selections, path) =>
+            {
+                return selections
+                    .SelectMany(selection =>
+                    {
+                        return (selection.Value, path.Predicate) switch
+                        {
+                            (IonStruct @struct, PropertyPredicate propertyPredicate) => @struct.Value
+                                .Where(propertyPredicate.Execute)
+                                .Select(property => new PropertyPathSelection(property.NameText, property.Value, selection.Value))
+                                .Cast<IPathSelection>(),
+
+                            (IonList list, ListPredicate listPredicate) => list.Value
+                                .Select((item, index) => (index, item))
+                                .Where(listPredicate.Execute)
+                                .Select(listItem => new ListPathSelection(listItem.index, listItem.item, selection.Value))
+                                .Cast<IPathSelection>(),
+
+                            _ => throw new ArgumentException($"Supplied type '{selection.Value.Type}' does not match the underlying predicate type '{path.Predicate.GetType()}'")
+                        };
+                    })
+                    .ToArray();
+            });
+        }
+
+        public IEnumerable<PathSegment> Paths()
+        {
+            if (Next is null)
+                return this.Enumerate();
+
+            else return this
+                    .Enumerate()
+                    .Concat(Next.Paths());
+        }
+
         private PropertyPathSelection Copy(IonStruct.Property property)
         {
             var value = Next is null
                 ? CopyIon(property.Value)
-                : CreateIon(property.Value.Type, Select(property.Value));
+                : CreateIon(property.Value.Type, Pick(property.Value));
 
             return new PropertyPathSelection(property.Name.Value, value);
         }
@@ -75,12 +128,12 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             var value = Next is null
                 ? CopyIon(tuple.value, tuple.listIndex)
-                : CreateIon(tuple.value.Type, Select(tuple.value), tuple.listIndex);
+                : CreateIon(tuple.value.Type, Pick(tuple.value), tuple.listIndex);
 
             return new ListPathSelection(tuple.listIndex, value);
         }
 
-        private IIonType CopyIon(IIonType value, int? listIndex = null)
+        private static IIonType CopyIon(IIonType value, int? listIndex = null)
         {
             var listMarkerAnnotation = listIndex is not null
                 ?  $"{ListMarkerAnnotationPrefix}{listIndex}"
@@ -183,7 +236,7 @@ namespace Axis.Rhea.Core.Workflow.State
             };
         }
 
-        private IIonType CreateIon(
+        private static IIonType CreateIon(
             IonTypes ionType,
             IEnumerable<IPathSelection> items,
             int? listIndex = null)

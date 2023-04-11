@@ -31,8 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Akka" Version="1.5.1" />
-    <PackageReference Include="Axis.Ion" Version="0.0.2" />
+    <PackageReference Include="Axis.Ion" Version="0.0.3" />
     <PackageReference Include="Axis.Luna.Common" Version="6.0.6" />
     <PackageReference Include="Axis.Luna.Extensions" Version="6.0.6" />
     <PackageReference Include="Axis.Pulsar.Grammar" Version="0.7.7" />
