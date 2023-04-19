@@ -26,8 +26,8 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             try
             {
-                using var queryXbnfStream = typeof(Selector).Assembly
-                    .GetManifestResourceStream($"{typeof(Selector).Namespace}.StateQuery.xbnf");
+                using var queryXbnfStream = typeof(PulsarUtil).Assembly
+                    .GetManifestResourceStream($"{typeof(PulsarUtil).Namespace}.StateQuery.xbnf");
 
                 var importer = new Importer();
 

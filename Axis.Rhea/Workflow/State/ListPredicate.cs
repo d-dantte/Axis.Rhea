@@ -159,8 +159,13 @@ namespace Axis.Rhea.Core.Workflow.State
                 return false;
             }
 
-            var scriptExpression = ExpressionTransformer.TransformExpression(relationalPredicateNode);
-            value = Result.Of(new ListPredicate(scriptExpression.TokenValue()));
+            var scriptExpression = ExpressionTransformer
+                .TransformExpression(relationalPredicateNode)
+                .TokenValue()
+                .TrimStart('{')
+                .TrimEnd('}');
+
+            value = Result.Of(new ListPredicate(scriptExpression));
             return true;
         }
         #endregion
@@ -170,7 +175,7 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             public ValueWrapper Value { get; }
 
-            public int Key { get; }
+            public ValueWrapper Key { get; }
 
             public ScriptGlobal((int index, IIonType value) item)
             {

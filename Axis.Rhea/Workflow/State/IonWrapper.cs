@@ -1,6 +1,7 @@
 ﻿using Axis.Ion.Types;
 using Axis.Luna.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
@@ -23,8 +24,8 @@ namespace Axis.Rhea.Core.Workflow.State
         {
         }
 
-        public ValueWrapper(string propertyName)
-            : this(new IonString(propertyName))
+        public ValueWrapper(string @string)
+            : this(new IonString(@string))
         {
         }
 
@@ -42,10 +43,10 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             return Ion switch
             {
-                IonString str => str.Value?.ToLower(),
-                IonIdentifier id => id.Value?.ToLower(),
-                IonQuotedSymbol quote => quote.Value?.ToLower(),
-                _ => throw new InvalidOperationException($"This transformation cannot be performed on the type: {Ion.Type}")
+                IonString str => new IonString(str.Value?.ToLower()),
+                IonIdentifier id => new IonIdentifier(id.Value?.ToLower()),
+                IonQuotedSymbol quote => new IonQuotedSymbol(quote.Value?.ToLower()),
+                _ => throw new InvalidOperationException($"'ToLower' transformation cannot be performed on the type: {Ion.Type}")
             };
         }
 
@@ -53,10 +54,10 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             return Ion switch
             {
-                IonString str => str.Value?.ToUpper(),
-                IonIdentifier id => id.Value?.ToUpper(),
-                IonQuotedSymbol quote => quote.Value?.ToUpper(),
-                _ => throw new InvalidOperationException($"This transformation cannot be performed on the type: {Ion.Type}")
+                IonString str => new IonString(str.Value?.ToUpper()),
+                IonIdentifier id => new IonIdentifier(id.Value?.ToUpper()),
+                IonQuotedSymbol quote => new IonQuotedSymbol(quote.Value?.ToUpper()),
+                _ => throw new InvalidOperationException($"'ToUpper' transformation cannot be performed on the type: {Ion.Type}")
             };
         }
 
@@ -64,10 +65,21 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             return Ion switch
             {
-                IonString str => str.Value?.Reverse().JoinUsing(""),
-                IonIdentifier id => id.Value?.Reverse().JoinUsing(""),
-                IonQuotedSymbol quote => quote.Value?.Reverse().JoinUsing(""),
-                _ => throw new InvalidOperationException($"This transformation cannot be performed on the type: {Ion.Type}")
+                IonString str => new IonString(str.Value?.Reverse().JoinUsing("")),
+                IonIdentifier id => new IonIdentifier(id.Value?.Reverse().JoinUsing("")),
+                IonQuotedSymbol quote => new IonQuotedSymbol(quote.Value?.Reverse().JoinUsing("")),
+
+                IonList list => new IonList(
+                    new IonList.Initializer(
+                        list.Annotations,
+                        list.Value?.Reverse().ToArray() ?? throw new ArgumentNullException())),
+
+                IonSexp sexp => new IonSexp(
+                    new IonSexp.Initializer(
+                        sexp.Annotations,
+                        sexp.Value?.Reverse().ToArray() ?? throw new ArgumentNullException())),
+
+                _ => throw new InvalidOperationException($"'Reverse' transformation cannot be performed on the type: {Ion.Type}")
             };
         }
 
@@ -78,7 +90,12 @@ namespace Axis.Rhea.Core.Workflow.State
                 IonString str => new ValueWrapper(str.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
                 IonIdentifier id => new ValueWrapper(id.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
                 IonQuotedSymbol quote => new ValueWrapper(quote.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
-                _ => throw new InvalidOperationException($"This transformation cannot be performed on the type: {Ion.Type}")
+                IonClob clob => new ValueWrapper(clob.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
+                IonBlob blob => new ValueWrapper(blob.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
+                IonList list => new ValueWrapper(list.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
+                IonSexp sexp => new ValueWrapper(sexp.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
+                IonStruct @struct => new ValueWrapper(@struct.Value?.Length ?? throw new InvalidOperationException("Count called on null value")),
+                _ => throw new InvalidOperationException($"'Count' transformation cannot be performed on the type: {Ion.Type}")
             };
         }
 
@@ -141,11 +158,9 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             return Ion switch
             {
-                IonString
-                or IonIdentifier
-                or IonQuotedSymbol => value.Ion switch
+                IRefValue<string> operand => value.Ion switch
                 {
-                    IonString sub => Ion.ToIonText()?.StartsWith(sub.ToIonText()) ?? false,
+                    IRefValue<string> sub => operand.Value?.StartsWith(sub.Value) ?? false,
                     _ => throw new ArgumentException($"Invalid value type: {value.Ion.Type}")
                 },
                 _ => throw new InvalidOperationException($"Cannot perform the 'starts with' operation on type: {Ion.Type}")
@@ -156,11 +171,9 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             return Ion switch
             {
-                IonString
-                or IonIdentifier
-                or IonQuotedSymbol => value.Ion switch
+                IRefValue<string> operand => value.Ion switch
                 {
-                    IonString sub => Ion.ToIonText()?.EndsWith(sub.ToIonText()) ?? false,
+                    IRefValue<string> sub => operand.Value?.EndsWith(sub.Value) ?? false,
                     _ => throw new ArgumentException($"Invalid value type: {value.Ion.Type}")
                 },
                 _ => throw new InvalidOperationException($"Cannot perform the 'ends with' operation on type: {Ion.Type}")
@@ -171,11 +184,9 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             return Ion switch
             {
-                IonString
-                or IonIdentifier
-                or IonQuotedSymbol => value.Ion switch
+                IRefValue<string> operand => value.Ion switch
                 {
-                    IonString sub => new Regex(sub.ToIonText()).IsMatch(Ion.ToIonText()),
+                    IRefValue<string> sub => new Regex(sub.Value).IsMatch(operand.Value),
                     _ => throw new ArgumentException($"Invalid value type: {value.Ion.Type}")
                 },
                 _ => throw new InvalidOperationException($"Cannot perform the operation on type: {Ion.Type}")
@@ -226,6 +237,7 @@ namespace Axis.Rhea.Core.Workflow.State
         public static implicit operator ValueWrapper(IonStruct ion) => new ValueWrapper(ion);
 
         public static implicit operator ValueWrapper(BigInteger bigInt) => new ValueWrapper(new IonInt(bigInt));
+        public static implicit operator ValueWrapper(long value) => new ValueWrapper(new IonInt(value));
         public static implicit operator ValueWrapper(decimal value) => new ValueWrapper(new IonDecimal(value));
         public static implicit operator ValueWrapper(double value) => new ValueWrapper(new IonFloat(value));
         public static implicit operator ValueWrapper(string value) => new ValueWrapper(new IonString(value));
@@ -802,7 +814,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Float + *
                 (IonFloat lfloat, IonInt rint) => (lfloat.Value, rint.Value) switch
                 {
-                    (double lvalue, BigInteger rvalue) => new BigDecimal(lvalue) + rvalue,
+                    (double lvalue, BigInteger rvalue) => lvalue + (double)rvalue,
                     _ => throw new Exception($"Invalid addition between {lfloat.Value} and {rint.Value}")
                 },
                 (IonFloat lfloat, IonFloat rfloat) => (lfloat.Value, rfloat.Value) switch
@@ -812,12 +824,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonFloat lfloat, IonDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
                 {
-                    (double lvalue, decimal rvalue) => new BigDecimal(lvalue) + rvalue,
-                    _ => throw new Exception($"Invalid addition between {lfloat.Value} and {rdecimal.Value}")
-                },
-                (IonFloat lfloat, IonBigDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
-                {
-                    (double lvalue, BigDecimal rvalue) => lvalue + rvalue,
+                    (double lvalue, decimal rvalue) => lvalue + (double)rvalue,
                     _ => throw new Exception($"Invalid addition between {lfloat.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -825,46 +832,18 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Decimal + *
                 (IonDecimal ldecimal, IonInt rint) => (ldecimal.Value, rint.Value) switch
                 {
-                    (decimal lvalue, BigInteger rvalue) => lvalue + new BigDecimal(rvalue),
+                    (decimal lvalue, BigInteger rvalue) => lvalue + (decimal)rvalue,
                     _ => throw new Exception($"Invalid addition between {ldecimal.Value} and {rint.Value}")
                 },
                 (IonDecimal ldecimal, IonFloat rfloat) => (ldecimal.Value, rfloat.Value) switch
                 {
-                    (decimal lvalue, double rvalue) => lvalue + new BigDecimal(rvalue),
+                    (decimal lvalue, double rvalue) => lvalue + (decimal)rvalue,
                     _ => throw new Exception($"Invalid addition between {ldecimal.Value} and {rfloat.Value}")
                 },
                 (IonDecimal ldecimal, IonDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
                 {
                     (decimal lvalue, decimal rvalue) => lvalue + rvalue,
                     _ => throw new Exception($"Invalid addition between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                (IonDecimal ldecimal, IonBigDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
-                {
-                    (decimal lvalue, BigDecimal rvalue) => lvalue + rvalue,
-                    _ => throw new Exception($"Invalid addition between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                #endregion
-
-                #region BigDecimal + *
-                (IonBigDecimal lbdecimal, IonInt rint) => (lbdecimal.Value, rint.Value) switch
-                {
-                    (BigDecimal lvalue, BigInteger rvalue) => lvalue + rvalue,
-                    _ => throw new Exception($"Invalid addition between {lbdecimal.Value} and {rint.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonFloat rfloat) => (lbdecimal.Value, rfloat.Value) switch
-                {
-                    (BigDecimal lvalue, double rvalue) => lvalue + rvalue,
-                    _ => throw new Exception($"Invalid addition between {lbdecimal.Value} and {rfloat.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, decimal rvalue) => lvalue + rvalue,
-                    _ => throw new Exception($"Invalid addition between {lbdecimal.Value} and {rdecimal.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonBigDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, BigDecimal rvalue) => lvalue + rvalue,
-                    _ => throw new Exception($"Invalid addition between {lbdecimal.Value} and {rdecimal.Value}")
                 },
                 #endregion
 
@@ -887,17 +866,12 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonInt lint, IonFloat rfloat) => (lint.Value, rfloat.Value) switch
                 {
-                    (BigInteger lvalue, double rvalue) => new BigDecimal(lvalue) - rvalue,
+                    (BigInteger lvalue, double rvalue) => (long)lvalue - rvalue,
                     _ => throw new Exception($"Invalid subtraction between {lint.Value} and {rfloat.Value}")
                 },
                 (IonInt lint, IonDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
                 {
-                    (BigInteger lvalue, decimal rvalue) => new BigDecimal(lvalue) - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {lint.Value} and {rdecimal.Value}")
-                },
-                (IonInt lint, IonBigDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
-                {
-                    (BigInteger lvalue, BigDecimal rvalue) => lvalue - rvalue,
+                    (BigInteger lvalue, decimal rvalue) => (long)lvalue - rvalue,
                     _ => throw new Exception($"Invalid subtraction between {lint.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -905,7 +879,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Float - *
                 (IonFloat lfloat, IonInt rint) => (lfloat.Value, rint.Value) switch
                 {
-                    (double lvalue, BigInteger rvalue) => new BigDecimal(lvalue) - rvalue,
+                    (double lvalue, BigInteger rvalue) => lvalue - (double)rvalue,
                     _ => throw new Exception($"Invalid subtraction between {lfloat.Value} and {rint.Value}")
                 },
                 (IonFloat lfloat, IonFloat rfloat) => (lfloat.Value, rfloat.Value) switch
@@ -915,12 +889,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonFloat lfloat, IonDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
                 {
-                    (double lvalue, decimal rvalue) => new BigDecimal(lvalue) - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {lfloat.Value} and {rdecimal.Value}")
-                },
-                (IonFloat lfloat, IonBigDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
-                {
-                    (double lvalue, BigDecimal rvalue) => lvalue - rvalue,
+                    (double lvalue, decimal rvalue) => lvalue - (double)rvalue,
                     _ => throw new Exception($"Invalid subtraction between {lfloat.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -928,46 +897,18 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Decimal - *
                 (IonDecimal ldecimal, IonInt rint) => (ldecimal.Value, rint.Value) switch
                 {
-                    (decimal lvalue, BigInteger rvalue) => lvalue - new BigDecimal(rvalue),
+                    (decimal lvalue, BigInteger rvalue) => lvalue - (decimal)rvalue,
                     _ => throw new Exception($"Invalid subtraction between {ldecimal.Value} and {rint.Value}")
                 },
                 (IonDecimal ldecimal, IonFloat rfloat) => (ldecimal.Value, rfloat.Value) switch
                 {
-                    (decimal lvalue, double rvalue) => lvalue - new BigDecimal(rvalue),
+                    (decimal lvalue, double rvalue) => lvalue - (decimal)rvalue,
                     _ => throw new Exception($"Invalid subtraction between {ldecimal.Value} and {rfloat.Value}")
                 },
                 (IonDecimal ldecimal, IonDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
                 {
                     (decimal lvalue, decimal rvalue) => lvalue - rvalue,
                     _ => throw new Exception($"Invalid subtraction between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                (IonDecimal ldecimal, IonBigDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
-                {
-                    (decimal lvalue, BigDecimal rvalue) => lvalue - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                #endregion
-
-                #region BigDecimal - *
-                (IonBigDecimal lbdecimal, IonInt rint) => (lbdecimal.Value, rint.Value) switch
-                {
-                    (BigDecimal lvalue, BigInteger rvalue) => lvalue - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {lbdecimal.Value} and {rint.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonFloat rfloat) => (lbdecimal.Value, rfloat.Value) switch
-                {
-                    (BigDecimal lvalue, double rvalue) => lvalue - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {lbdecimal.Value} and {rfloat.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, decimal rvalue) => lvalue - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {lbdecimal.Value} and {rdecimal.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonBigDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, BigDecimal rvalue) => lvalue - rvalue,
-                    _ => throw new Exception($"Invalid subtraction between {lbdecimal.Value} and {rdecimal.Value}")
                 },
                 #endregion
 
@@ -990,17 +931,12 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonInt lint, IonFloat rfloat) => (lint.Value, rfloat.Value) switch
                 {
-                    (BigInteger lvalue, double rvalue) => new BigDecimal(lvalue) * rvalue,
+                    (BigInteger lvalue, double rvalue) => (long)lvalue * rvalue,
                     _ => throw new Exception($"Invalid multiplication between {lint.Value} and {rfloat.Value}")
                 },
                 (IonInt lint, IonDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
                 {
-                    (BigInteger lvalue, decimal rvalue) => new BigDecimal(lvalue) * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {lint.Value} and {rdecimal.Value}")
-                },
-                (IonInt lint, IonBigDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
-                {
-                    (BigInteger lvalue, BigDecimal rvalue) => lvalue * rvalue,
+                    (BigInteger lvalue, decimal rvalue) => (long)lvalue * rvalue,
                     _ => throw new Exception($"Invalid multiplication between {lint.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -1008,7 +944,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Float * *
                 (IonFloat lfloat, IonInt rint) => (lfloat.Value, rint.Value) switch
                 {
-                    (double lvalue, BigInteger rvalue) => new BigDecimal(lvalue) * rvalue,
+                    (double lvalue, BigInteger rvalue) => lvalue * (double)rvalue,
                     _ => throw new Exception($"Invalid multiplication between {lfloat.Value} and {rint.Value}")
                 },
                 (IonFloat lfloat, IonFloat rfloat) => (lfloat.Value, rfloat.Value) switch
@@ -1018,12 +954,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonFloat lfloat, IonDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
                 {
-                    (double lvalue, decimal rvalue) => new BigDecimal(lvalue) * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {lfloat.Value} and {rdecimal.Value}")
-                },
-                (IonFloat lfloat, IonBigDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
-                {
-                    (double lvalue, BigDecimal rvalue) => lvalue * rvalue,
+                    (double lvalue, decimal rvalue) => lvalue * (double)rvalue,
                     _ => throw new Exception($"Invalid multiplication between {lfloat.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -1031,46 +962,18 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Decimal * *
                 (IonDecimal ldecimal, IonInt rint) => (ldecimal.Value, rint.Value) switch
                 {
-                    (decimal lvalue, BigInteger rvalue) => lvalue * new BigDecimal(rvalue),
+                    (decimal lvalue, BigInteger rvalue) => lvalue * (decimal)rvalue,
                     _ => throw new Exception($"Invalid multiplication between {ldecimal.Value} and {rint.Value}")
                 },
                 (IonDecimal ldecimal, IonFloat rfloat) => (ldecimal.Value, rfloat.Value) switch
                 {
-                    (decimal lvalue, double rvalue) => lvalue * new BigDecimal(rvalue),
+                    (decimal lvalue, double rvalue) => lvalue * (decimal)rvalue,
                     _ => throw new Exception($"Invalid multiplication between {ldecimal.Value} and {rfloat.Value}")
                 },
                 (IonDecimal ldecimal, IonDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
                 {
                     (decimal lvalue, decimal rvalue) => lvalue * rvalue,
                     _ => throw new Exception($"Invalid multiplication between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                (IonDecimal ldecimal, IonBigDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
-                {
-                    (decimal lvalue, BigDecimal rvalue) => lvalue * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                #endregion
-
-                #region BigDecimal * *
-                (IonBigDecimal lbdecimal, IonInt rint) => (lbdecimal.Value, rint.Value) switch
-                {
-                    (BigDecimal lvalue, BigInteger rvalue) => lvalue * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {lbdecimal.Value} and {rint.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonFloat rfloat) => (lbdecimal.Value, rfloat.Value) switch
-                {
-                    (BigDecimal lvalue, double rvalue) => lvalue * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {lbdecimal.Value} and {rfloat.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, decimal rvalue) => lvalue * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {lbdecimal.Value} and {rdecimal.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonBigDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, BigDecimal rvalue) => lvalue * rvalue,
-                    _ => throw new Exception($"Invalid multiplication between {lbdecimal.Value} and {rdecimal.Value}")
                 },
                 #endregion
 
@@ -1093,17 +996,12 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonInt lint, IonFloat rfloat) => (lint.Value, rfloat.Value) switch
                 {
-                    (BigInteger lvalue, double rvalue) => new BigDecimal(lvalue) / rvalue,
+                    (BigInteger lvalue, double rvalue) => (long)lvalue / rvalue,
                     _ => throw new Exception($"Invalid division between {lint.Value} and {rfloat.Value}")
                 },
                 (IonInt lint, IonDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
                 {
-                    (BigInteger lvalue, decimal rvalue) => new BigDecimal(lvalue) / rvalue,
-                    _ => throw new Exception($"Invalid division between {lint.Value} and {rdecimal.Value}")
-                },
-                (IonInt lint, IonBigDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
-                {
-                    (BigInteger lvalue, BigDecimal rvalue) => lvalue / rvalue,
+                    (BigInteger lvalue, decimal rvalue) => (long)lvalue / rvalue,
                     _ => throw new Exception($"Invalid division between {lint.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -1111,7 +1009,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Float / *
                 (IonFloat lfloat, IonInt rint) => (lfloat.Value, rint.Value) switch
                 {
-                    (double lvalue, BigInteger rvalue) => new BigDecimal(lvalue) / rvalue,
+                    (double lvalue, BigInteger rvalue) => lvalue / (double)rvalue,
                     _ => throw new Exception($"Invalid division between {lfloat.Value} and {rint.Value}")
                 },
                 (IonFloat lfloat, IonFloat rfloat) => (lfloat.Value, rfloat.Value) switch
@@ -1121,12 +1019,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonFloat lfloat, IonDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
                 {
-                    (double lvalue, decimal rvalue) => new BigDecimal(lvalue) / rvalue,
-                    _ => throw new Exception($"Invalid division between {lfloat.Value} and {rdecimal.Value}")
-                },
-                (IonFloat lfloat, IonBigDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
-                {
-                    (double lvalue, BigDecimal rvalue) => lvalue / rvalue,
+                    (double lvalue, decimal rvalue) => lvalue / (double)rvalue,
                     _ => throw new Exception($"Invalid division between {lfloat.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -1134,46 +1027,18 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Decimal / *
                 (IonDecimal ldecimal, IonInt rint) => (ldecimal.Value, rint.Value) switch
                 {
-                    (decimal lvalue, BigInteger rvalue) => lvalue / new BigDecimal(rvalue),
+                    (decimal lvalue, BigInteger rvalue) => lvalue / (decimal)rvalue,
                     _ => throw new Exception($"Invalid division between {ldecimal.Value} and {rint.Value}")
                 },
                 (IonDecimal ldecimal, IonFloat rfloat) => (ldecimal.Value, rfloat.Value) switch
                 {
-                    (decimal lvalue, double rvalue) => lvalue / new BigDecimal(rvalue),
+                    (decimal lvalue, double rvalue) => lvalue / (decimal)rvalue,
                     _ => throw new Exception($"Invalid division between {ldecimal.Value} and {rfloat.Value}")
                 },
                 (IonDecimal ldecimal, IonDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
                 {
                     (decimal lvalue, decimal rvalue) => lvalue / rvalue,
                     _ => throw new Exception($"Invalid division between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                (IonDecimal ldecimal, IonBigDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
-                {
-                    (decimal lvalue, BigDecimal rvalue) => lvalue / rvalue,
-                    _ => throw new Exception($"Invalid division between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                #endregion
-
-                #region BigDecimal / *
-                (IonBigDecimal lbdecimal, IonInt rint) => (lbdecimal.Value, rint.Value) switch
-                {
-                    (BigDecimal lvalue, BigInteger rvalue) => lvalue / rvalue,
-                    _ => throw new Exception($"Invalid division between {lbdecimal.Value} and {rint.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonFloat rfloat) => (lbdecimal.Value, rfloat.Value) switch
-                {
-                    (BigDecimal lvalue, double rvalue) => lvalue / rvalue,
-                    _ => throw new Exception($"Invalid division between {lbdecimal.Value} and {rfloat.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, decimal rvalue) => lvalue / rvalue,
-                    _ => throw new Exception($"Invalid division between {lbdecimal.Value} and {rdecimal.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonBigDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, BigDecimal rvalue) => lvalue / rvalue,
-                    _ => throw new Exception($"Invalid division between {lbdecimal.Value} and {rdecimal.Value}")
                 },
                 #endregion
 
@@ -1196,17 +1061,12 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonInt lint, IonFloat rfloat) => (lint.Value, rfloat.Value) switch
                 {
-                    (BigInteger lvalue, double rvalue) => new BigDecimal(lvalue) % rvalue,
+                    (BigInteger lvalue, double rvalue) => (long)lvalue % rvalue,
                     _ => throw new Exception($"Invalid modulo between {lint.Value} and {rfloat.Value}")
                 },
                 (IonInt lint, IonDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
                 {
-                    (BigInteger lvalue, decimal rvalue) => new BigDecimal(lvalue) % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {lint.Value} and {rdecimal.Value}")
-                },
-                (IonInt lint, IonBigDecimal rdecimal) => (lint.Value, rdecimal.Value) switch
-                {
-                    (BigInteger lvalue, BigDecimal rvalue) => lvalue % rvalue,
+                    (BigInteger lvalue, decimal rvalue) => (long)lvalue % rvalue,
                     _ => throw new Exception($"Invalid modulo between {lint.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -1214,7 +1074,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Float % *
                 (IonFloat lfloat, IonInt rint) => (lfloat.Value, rint.Value) switch
                 {
-                    (double lvalue, BigInteger rvalue) => new BigDecimal(lvalue) % rvalue,
+                    (double lvalue, BigInteger rvalue) => lvalue % (double)rvalue,
                     _ => throw new Exception($"Invalid modulo between {lfloat.Value} and {rint.Value}")
                 },
                 (IonFloat lfloat, IonFloat rfloat) => (lfloat.Value, rfloat.Value) switch
@@ -1224,12 +1084,7 @@ namespace Axis.Rhea.Core.Workflow.State
                 },
                 (IonFloat lfloat, IonDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
                 {
-                    (double lvalue, decimal rvalue) => new BigDecimal(lvalue) % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {lfloat.Value} and {rdecimal.Value}")
-                },
-                (IonFloat lfloat, IonBigDecimal rdecimal) => (lfloat.Value, rdecimal.Value) switch
-                {
-                    (double lvalue, BigDecimal rvalue) => lvalue % rvalue,
+                    (double lvalue, decimal rvalue) => lvalue % (double)rvalue,
                     _ => throw new Exception($"Invalid modulo between {lfloat.Value} and {rdecimal.Value}")
                 },
                 #endregion
@@ -1237,46 +1092,18 @@ namespace Axis.Rhea.Core.Workflow.State
                 #region Decimal % *
                 (IonDecimal ldecimal, IonInt rint) => (ldecimal.Value, rint.Value) switch
                 {
-                    (decimal lvalue, BigInteger rvalue) => lvalue % new BigDecimal(rvalue),
+                    (decimal lvalue, BigInteger rvalue) => lvalue % (decimal)rvalue,
                     _ => throw new Exception($"Invalid modulo between {ldecimal.Value} and {rint.Value}")
                 },
                 (IonDecimal ldecimal, IonFloat rfloat) => (ldecimal.Value, rfloat.Value) switch
                 {
-                    (decimal lvalue, double rvalue) => lvalue % new BigDecimal(rvalue),
+                    (decimal lvalue, double rvalue) => lvalue % (decimal)rvalue,
                     _ => throw new Exception($"Invalid modulo between {ldecimal.Value} and {rfloat.Value}")
                 },
                 (IonDecimal ldecimal, IonDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
                 {
                     (decimal lvalue, decimal rvalue) => lvalue % rvalue,
                     _ => throw new Exception($"Invalid modulo between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                (IonDecimal ldecimal, IonBigDecimal rdecimal) => (ldecimal.Value, rdecimal.Value) switch
-                {
-                    (decimal lvalue, BigDecimal rvalue) => lvalue % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {ldecimal.Value} and {rdecimal.Value}")
-                },
-                #endregion
-
-                #region BigDecimal % *
-                (IonBigDecimal lbdecimal, IonInt rint) => (lbdecimal.Value, rint.Value) switch
-                {
-                    (BigDecimal lvalue, BigInteger rvalue) => lvalue % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {lbdecimal.Value} and {rint.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonFloat rfloat) => (lbdecimal.Value, rfloat.Value) switch
-                {
-                    (BigDecimal lvalue, double rvalue) => lvalue % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {lbdecimal.Value} and {rfloat.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, decimal rvalue) => lvalue % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {lbdecimal.Value} and {rdecimal.Value}")
-                },
-                (IonBigDecimal lbdecimal, IonBigDecimal rdecimal) => (lbdecimal.Value, rdecimal.Value) switch
-                {
-                    (BigDecimal lvalue, BigDecimal rvalue) => lvalue % rvalue,
-                    _ => throw new Exception($"Invalid modulo between {lbdecimal.Value} and {rdecimal.Value}")
                 },
                 #endregion
 
@@ -1310,7 +1137,6 @@ namespace Axis.Rhea.Core.Workflow.State
         #endregion
 
         #region helpers
-
         private static int CompareTo(BigInteger @int, double @double)
         {
             var dint = (BigInteger)@double;
@@ -1387,53 +1213,5 @@ namespace Axis.Rhea.Core.Workflow.State
         }
         #endregion
 
-
-        #region nested types
-        //public struct IonBigDecimal : IStructValue<BigDecimal>
-        //{
-        //    private readonly IIonType.Annotation[] _annotations;
-
-        //    public BigDecimal? Value { get; }
-
-        //    public IonTypes Type => (IonTypes)21;
-
-        //    public bool IsNull => Value is null;
-
-        //    public IIonType.Annotation[] Annotations => _annotations?.ToArray() ?? Array.Empty<IIonType.Annotation>();
-
-        //    public IonBigDecimal(BigDecimal? value, params Annotation[] annotations)
-        //    {
-        //        Value = value;
-        //        _annotations = annotations
-        //            .ApplyTo(Validate)
-        //            .ToArray();
-        //    }
-
-        //    public string ToIonText()
-        //    {
-        //        return Value
-        //            ?.ToString()
-        //            ?? "null.bigdecimal";
-        //    }
-
-        //    public bool ValueEquals(IStructValue<BigDecimal> other)
-        //    {
-        //        return Value == other.Value;
-        //    }
-
-        //    internal static Annotation[] Validate(Annotation[] annotations)
-        //    {
-        //        if (annotations == null)
-        //            throw new ArgumentNullException(nameof(annotations));
-
-        //        if (annotations.Any(a => a == default))
-        //            throw new ArgumentException($"Invalid {nameof(annotations)}");
-
-        //        return annotations;
-        //    }
-
-        //    public static implicit operator IonBigDecimal(BigDecimal? value) => new IonBigDecimal(value);
-        //}
-        #endregion
     }
 }

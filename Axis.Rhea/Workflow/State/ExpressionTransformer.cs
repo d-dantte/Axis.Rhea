@@ -120,6 +120,22 @@ namespace Axis.Rhea.Core.Workflow.State
                         TransformExpression(relationalExpression.FindNode($"{RelationalRhs}.{ExpressionSymbol}")),
                         CSTNode.Of("close-bracket", ")")),
 
+                    "starts with" => CSTNode.Of(
+                        "transformed-starts-with-expression",
+                        CSTNode.Of("open-bracket", "("),
+                        TransformExpression(relationalExpression.FindNode(ArithmeticExpression)),
+                        CSTNode.Of("starts-with-method", $").{GetRelationalFunction(@operator)}("),
+                        TransformExpression(relationalExpression.FindNode($"{RelationalRhs}.{ExpressionSymbol}")),
+                        CSTNode.Of("close-bracket", ")")),
+
+                    "ends with" => CSTNode.Of(
+                        "transformed-ends-with-expression",
+                        CSTNode.Of("open-bracket", "("),
+                        TransformExpression(relationalExpression.FindNode(ArithmeticExpression)),
+                        CSTNode.Of("ends-with-method", $").{GetRelationalFunction(@operator)}("),
+                        TransformExpression(relationalExpression.FindNode($"{RelationalRhs}.{ExpressionSymbol}")),
+                        CSTNode.Of("close-bracket", ")")),
+
                     _ => relationalExpression
                         .As<CSTNode.BranchNode>().Nodes
                         .Select(TransformExpression)

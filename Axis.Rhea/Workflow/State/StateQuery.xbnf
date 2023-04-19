@@ -14,7 +14,15 @@
 $query -> $predicate-node.+
 
 # Predicate Node
-$predicate-node -> +[$ml-space.? "/" $line-space.? $annotation-conditional.? $line-space.? ?[
+$predicate-node -> +[$ml-space.? "/" $line-space.? ?[
+	$property-name
+ 	$list-index
+	$conditionals]]
+
+$property-name -> /^[a-zA-Z]\w*$/.1,
+$list-index -> +["[" $line-space.? $integer $line-space.? "]"]
+
+$conditionals -> +[$annotation-conditional.? $line-space.? ?[
 	$property-conditional
 	$list-conditional
 	$value-conditional]]

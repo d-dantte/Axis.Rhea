@@ -1,14 +1,8 @@
 ﻿using Axis.Pulsar.Grammar.CST;
 using Axis.Pulsar.Grammar.Recognizers.Results;
 using Axis.Rhea.Core.Workflow.State;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Axis.Rhea.Core.Tests.Workflow.StateQuery
+namespace Axis.Rhea.Core.Tests.Workflow.State
 {
     [TestClass]
     public class ExpressionTransformerTests
@@ -140,37 +134,49 @@ namespace Axis.Rhea.Core.Tests.Workflow.StateQuery
             success = result as SuccessResult;
             Assert.IsNotNull(success);
             resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
-            Assert.AreEqual("Value.In(7, 8)", resultNode.TokenValue());
+            Assert.AreEqual("(Value).In(7, 8)", resultNode.TokenValue());
 
             result = recognizer.Recognize("$ not in (7, 8)");
             success = result as SuccessResult;
             Assert.IsNotNull(success);
             resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
-            Assert.AreEqual("Value.NotIn(7, 8)", resultNode.TokenValue());
+            Assert.AreEqual("(Value).NotIn(7, 8)", resultNode.TokenValue());
+
+            result = recognizer.Recognize("$ starts with \"abc\"");
+            success = result as SuccessResult;
+            Assert.IsNotNull(success);
+            resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
+            Assert.AreEqual("(Value).StartsWith(\"abc\")", resultNode.TokenValue());
+
+            result = recognizer.Recognize("$ ends with \"abc\"");
+            success = result as SuccessResult;
+            Assert.IsNotNull(success);
+            resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
+            Assert.AreEqual("(Value).EndsWith(\"abc\")", resultNode.TokenValue());
 
             result = recognizer.Recognize("$ between 7..#");
             success = result as SuccessResult;
             Assert.IsNotNull(success);
             resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
-            Assert.AreEqual("Value.Between(7, Key)", resultNode.TokenValue());
+            Assert.AreEqual("(Value).Between(7, Key)", resultNode.TokenValue());
 
             result = recognizer.Recognize("$ not between 7..14");
             success = result as SuccessResult;
             Assert.IsNotNull(success);
             resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
-            Assert.AreEqual("Value.NotBetween(7, 14)", resultNode.TokenValue());
+            Assert.AreEqual("(Value).NotBetween(7, 14)", resultNode.TokenValue());
 
             result = recognizer.Recognize("$ is Decimal");
             success = result as SuccessResult;
             Assert.IsNotNull(success);
             resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
-            Assert.AreEqual("Value.IsType(typeof(IonDecimal))", resultNode.TokenValue());
+            Assert.AreEqual("(Value).IsType(typeof(IonDecimal))", resultNode.TokenValue());
 
             result = recognizer.Recognize("$ is not Struct");
             success = result as SuccessResult;
             Assert.IsNotNull(success);
             resultNode = ExpressionTransformer.TransformExpression(success.Symbol);
-            Assert.AreEqual("Value.IsNotType(typeof(IonStruct))", resultNode.TokenValue());
+            Assert.AreEqual("(Value).IsNotType(typeof(IonStruct))", resultNode.TokenValue());
         }
 
 

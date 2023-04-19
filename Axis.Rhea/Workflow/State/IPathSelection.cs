@@ -70,4 +70,16 @@ namespace Axis.Rhea.Core.Workflow.State
             Container = container as IonList?;
         }
     }
+
+    public record RootValueSelection : IPathSelection
+    {
+        public IIonType Value { get; }
+
+        public IIonType Container => null;
+
+        public RootValueSelection(IIonType value)
+        {
+            Value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+    }
 }

@@ -35,7 +35,7 @@ namespace Axis.Rhea.Core.Workflow
                 string.IsNullOrWhiteSpace,
                 new ArgumentException($"Invlalid id: {workflowId}"));
 
-            State = state  ?? throw new ArgumentNullException("state");
+            State = state  ?? throw new ArgumentNullException(nameof(state));
 
             this.timelines = timelines?
                 .ThrowIfNull(new ArgumentNullException(nameof(timelines)))

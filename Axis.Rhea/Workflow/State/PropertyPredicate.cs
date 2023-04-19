@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Axis.Rhea.Core.Workflow.State
 {
-    public struct PropertyPredicate : IPathPredicate<IonStruct.Property>, ISerializableEntity<PropertyPredicate>, Pulsar.Grammar.Utils.IParsable<PropertyPredicate>
+    public readonly struct PropertyPredicate : IPathPredicate<IonStruct.Property>, ISerializableEntity<PropertyPredicate>, Pulsar.Grammar.Utils.IParsable<PropertyPredicate>
     {
         internal static readonly string PropertyConditionalSymbol = "property-conditional";
         internal static readonly string RelationalPredicateSymbol = "relational-predicate";
@@ -159,8 +159,13 @@ namespace Axis.Rhea.Core.Workflow.State
                 return false;
             }
 
-            var scriptExpression = ExpressionTransformer.TransformExpression(relationalPredicateNode);
-            value = Result.Of(new PropertyPredicate(scriptExpression.TokenValue()));
+            var scriptExpression = ExpressionTransformer
+                .TransformExpression(relationalPredicateNode)
+                .TokenValue()
+                .TrimStart('{')
+                .TrimEnd('}');
+
+            value = Result.Of(new PropertyPredicate(scriptExpression));
             return true;
         }
         #endregion
@@ -170,7 +175,7 @@ namespace Axis.Rhea.Core.Workflow.State
         {
             public ValueWrapper Value { get; }
 
-            public string Key { get; }
+            public ValueWrapper Key { get; }
 
             public ScriptGlobal(IonStruct.Property property)
             {

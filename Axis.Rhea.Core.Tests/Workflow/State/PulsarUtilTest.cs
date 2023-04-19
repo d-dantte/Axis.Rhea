@@ -3,7 +3,7 @@ using Axis.Pulsar.Grammar.Recognizers;
 using Axis.Pulsar.Grammar.Recognizers.Results;
 using Axis.Rhea.Core.Workflow.State;
 
-namespace Axis.Rhea.Core.Tests.Workflow.StateQuery
+namespace Axis.Rhea.Core.Tests.Workflow.State
 {
     [TestClass]
     public class PulsarUtilTest
