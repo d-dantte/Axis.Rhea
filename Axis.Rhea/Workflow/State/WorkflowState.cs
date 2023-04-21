@@ -1,14 +1,20 @@
 ﻿using Axis.Ion.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Axis.Rhea.Core.Workflow.State
 {
-    public class WorkflowState
+    /// <summary>
+    /// 
+    /// </summary>
+    public record WorkflowState
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public IonStruct Data { get; }
+
+        public WorkflowState(IonStruct data)
+        {
+            Data = data;
+        }
     }
 }

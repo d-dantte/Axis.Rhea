@@ -15,31 +15,31 @@ namespace Axis.Rhea.Core.Workflow.Activities
         /// <summary>
         /// 
         /// </summary>
-        public ImmutableList<(PathSegment Root, string Activity)> Conditions { get; }
+        //public ImmutableList<(PathSegment Root, string Activity)> Conditions { get; }
 
-        public ConditionalRedirect(string name, params (PathSegment root, string activity)[] conditions)
-        {
-            Name = name.ThrowIf(
-                string.IsNullOrWhiteSpace,
-                new ArgumentException($"Invalid activity name: '{name}'"));
+        //public ConditionalRedirect(string name, params (PathSegment root, string activity)[] conditions)
+        //{
+        //    Name = name.ThrowIf(
+        //        string.IsNullOrWhiteSpace,
+        //        new ArgumentException($"Invalid activity name: '{name}'"));
 
-            Conditions = conditions
-                .ThrowIfNull(new ArgumentNullException(nameof(conditions)))
-                .ThrowIfAny(
-                    IsInvalidPair,
-                    new ArgumentException($""))
-                .ToImmutableList();
-        }
+        //    Conditions = conditions
+        //        .ThrowIfNull(new ArgumentNullException(nameof(conditions)))
+        //        .ThrowIfAny(
+        //            IsInvalidPair,
+        //            new ArgumentException($""))
+        //        .ToImmutableList();
+        //}
 
-        private static bool IsInvalidPair((PathSegment root, string activity) pair)
-        {
-            if (pair.root is null)
-                return true;
+        //private static bool IsInvalidPair((PathSegment root, string activity) pair)
+        //{
+        //    if (pair.root is null)
+        //        return true;
 
-            if (string.IsNullOrWhiteSpace(pair.activity))
-                return true;
+        //    if (string.IsNullOrWhiteSpace(pair.activity))
+        //        return true;
 
-            return false;
-        }
+        //    return false;
+        //}
     }
 }

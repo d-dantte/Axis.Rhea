@@ -1,6 +1,7 @@
 ﻿using Axis.Luna.Common;
 using Axis.Luna.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -85,6 +86,40 @@ namespace Axis.Rhea.Core
 
                 yield return item;
             }
+        }
+
+        /// <summary>
+        /// Casts the given <see cref="IEnumerable"/> items into the supplied type
+        /// </summary>
+        /// <typeparam name="TOut">The type to be casted into</typeparam>
+        /// <param name="items">the items</param>
+        /// <returns>An enumerable with items casted to the supplied <typeparamref name="TOut"/></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static IEnumerable<TOut> SelectAs<TOut>(this IEnumerable items)
+        {
+            if (items is null)
+                throw new ArgumentNullException(nameof(items));
+
+            foreach(var item in items)
+            {
+                yield return (TOut)item;
+            }
+        }
+
+        public static IEnumerable<V> InsertAt<V>(this IEnumerable<V> items, int position, V value)
+        {
+            position.ThrowIf(p => p < 0, new ArgumentException($"Invalid position: {position}"));
+
+            int pos = 0;
+            foreach (var v in items)
+            {
+                if (pos++ == position) yield return value;
+                yield return v;
+            }
+
+            // items was empty
+            if (pos == 0)
+                yield return value;
         }
     }
 }

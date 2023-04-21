@@ -13,13 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Workflow\State\StateQuery-2.xbnf" />
-    <None Remove="Workflow\State\StateQuery.xbnf" />
+    <None Remove="Workflow\State\DataPathDefinition.xbnf" />
+    <None Remove="Workflow\State\DataTreeDefinition.xbnf" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Workflow\State\StateQuery.xbnf" />
-    <EmbeddedResource Include="Workflow\State\StateQuery-2.xbnf" />
+    <EmbeddedResource Include="Workflow\State\DataPathDefinition.xbnf" />
+    <EmbeddedResource Include="Workflow\State\DataTreeDefinition.xbnf" />
   </ItemGroup>
 
   <ItemGroup>
