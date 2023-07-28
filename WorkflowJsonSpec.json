@@ -1,0 +1,93 @@
+//Workflow spec for both json and ion
+{
+  "WorkflowProperties": {
+    "Name": "",
+    "Id": "",
+    "Version": "1.0.0"
+  },
+  "ActivityDefinition": {
+    "Start": "",
+    "Activities": {
+      "Activity_1": {
+        "Type": "ConditionalTransition",
+        "TransitionMap": [
+          {
+            "Condition": "",
+            "Activity": ""
+          },
+          {
+            "Condition": "",
+            "Activity": ""
+          }
+        ]
+      },
+      "Activity_2": {
+        "Type": "Directive",
+        "DirectiveId": "",
+        "TransitionMap": {
+          "ResponseCode_1": "Activity_x",
+          "ResponseCode_2": "Activity_y"
+        }
+      },
+      "Activity_3": {
+        "Type": "WorkflowInvocation",
+        "WorkflowFQId": "",
+        "Alias": "",
+        "NextActivity": "",
+        "Selector": "<version>|<execution-context>"
+      },
+      "Activity_4": {
+        "Type": "WorkflowStatusQuery",
+        "WorkflowRef": "<alias>|<fqid + instanceid [+ tl_sequenceid]>",
+        "TransitionMap": {
+          "Status_1": "Activity_1",
+          "Status_2": "Activity_2"
+        }
+      }
+    }
+  },
+  "DirectivesDefinition": [
+    {
+      "DirectiveId": "string",
+      "Timeout": "int:milliseconds",
+      "Delay": "int:milliseconds",
+      "REST": {
+        "RequestVerb": "string",
+        "EndPointUri": "url",
+        "Headers": {
+          "header": "value"
+        }
+      },
+      "RetryPolicy": {
+        "BackoffBase": "int:milliseconds",
+        "MaxJitter": "int:milliseconds",
+        "MaxRetries": "int",
+        "Trigger": "(%, $'Some error message', [#404, @NotCompleted])"
+      },
+      "StateSelector": [
+        "/prop1/prop2/prop3/[2]/prop4",
+        "/prop1/[0]",
+        "/prop3"
+      ]
+    },
+    {
+      "DirectiveId": "string",
+      "Timeout": "int:milliseconds",
+      "Delay": "int:milliseconds",
+      "gRPC": {
+        //not yet supported
+      },
+      "RetryPolicy": {
+        "BackoffBase": "int:milliseconds",
+        "MaxJitter": "int:milliseconds",
+        "MaxRetries": "int",
+        "Trigger": "(%, $'Some error message', [#404, @NotCompleted])"
+      },
+      "StateSelector": [
+        "/prop1/prop2/prop3/[2]/prop4",
+        "/prop1/[0]",
+        "/prop3"
+      ]
+    }
+  ]
+}

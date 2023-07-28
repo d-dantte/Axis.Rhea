@@ -1,0 +1,275 @@
+﻿#
+# Expression language to evaluate Workflow State data 
+#
+#
+
+## Expression (root)
+$expression -> ?[
+	$timestamp-expression
+	$duration-expression
+	$string-expression
+	$numeric-expression
+	$bool-expression]
+
+
+## Bool Expression
+$bool-expression -> ?[
+	$constant-boolean-expression
+	$bool-state-selection-expression
+	$state-selection-typecheck-expression
+	$state-selection-existence-expression
+	$relational-expression
+	$conditional-expression
+	$negation-expression]
+
+$constant-boolean-expression -> ?['true' 'false']
+$bool-state-selection-expression -> +["bool::" $data-path]
+
+# Type Check
+$state-selection-typecheck-expression -> +['$' ?[
+	$bool-state-selection-expression
+	$int-state-selection-expression
+	$float-state-selection-expression
+	$decimal-state-selection-expression
+	$timestamp-state-selection-expression
+	$string-state-selection-expression]]
+
+# Existence
+# Note: support for TLEvent Selection will come later
+$state-selection-existence-expression -> +['?' ?[
+	$bool-state-selection-expression
+	$int-state-selection-expression
+	$float-state-selection-expression
+	$decimal-state-selection-expression
+	$timestamp-state-selection-expression
+	$string-state-selection-expression]]
+
+# Relational Expression
+$relational-expression -> ?[
+	$string-match-expression
+	$binary-relational-expression
+	$parametarized-relational-expression]
+
+# String match Expression
+$string-match-expression -> +[
+	'('
+	$space.* $string-expression
+	$space.+ $string-match-operator
+	$space.+ $string-expression
+	$space.* ')']
+$string-match-operator -> ?[$matches-op $starts-with-op $ends-with-op $contains-op]
+$matches-op -> ?["matches" '!!']
+$starts-with-op -> ?["starts-with" '!<']
+$ends-with-op -> ?["ends-with" '>!']
+$contains-op -> ?["contains" '><']
+
+# Binary Relational Expression
+$binary-relational-expression -> +[
+	'('
+	$space.* $expression
+	$space.+ $relational-operator
+	$space.+ $expression
+	$space.* ')']
+$relational-operator -> ?['>=' '<=' '!=' '=' '>' '<']
+
+# Parametarized Relational Expression
+$parametarized-relational-expression -> +[
+	'('
+	$space.* $expression
+	$space.+ $prelational-operator
+	$space.+ $arguments
+	$space.* ')']
+$prelational-operator -> ?["in" "not-in" "between" "not-between"]
+$arguments -> +[
+	'('
+	$space.* $expression +[
+	$space.* ','
+	$space.+ $expression].*
+	$space.* ')']
+
+# Conditional Expression
+$conditional-expression -> +[
+	'('
+	$space.* $conditional-arg +[
+	$space.+ $conditional-operator
+	$space.+ $conditional-arg].+
+	$space.* ')']
+$conditional-operator -> ?['&' '|' '~']
+$conditional-arg -> ?[$xor-expression $bool-expression]
+$xor-expression -> +[
+	'('
+	$space.* $expression
+	$space.+ '^'
+	$space.+ $expression
+	$space.* ')']
+
+# Negation Expression
+$negation-expression -> +['!' $bool-expression]
+
+
+## String Expression
+$string-expression -> ?[
+	$string-concatenation-expression
+	$string-conversion-expression
+	$constant-string-expression
+	$string-state-selection-expression]
+
+$constant-string-expression -> @dqd-string
+$string-conversion-expression -> +["as-string::" $expression]
+$string-state-selection-expression -> +["string::" $data-path]
+$string-concatenation-expression -> +[$ssvalue +[$space.+ '+' $space.+ $svalue].+]
+$ssvalue -> ?[
+	$constant-string-expression
+	$string-state-selection-expression]
+$svalue -> ?[
+	$constant-string-expression
+	$string-state-selection-expression
+	$bool-expression
+	$timestamp-expression
+	$duration-expression
+	$numeric-expression]
+
+
+## Numric Expression
+$numeric-expression -> ?[
+	$constant-numeric-expression
+	$int-state-selection-expression
+	$float-state-selection-expression
+	$decimal-state-selection-expression
+	$arithmetic-expression]
+
+$constant-numeric-expression -> +[$sign.? ?[
+	$float-notation
+	$decimal-notation
+	$int-notation]]
+$sign -> ?['+' '-']
+$float-notation -> +[$fraction-notation 'E' $sign.? $int-notation]
+$decimal-notation -> +[$fraction-notation +['D' $sign.? $int-notation].?]
+$fraction-notation -> +[$int-notation '.' $int-notation]
+$int-notation -> /^-?\d+$/.2,
+
+$int-state-selection-expression -> +["int::" $data-path]
+$float-state-selection-expression -> +["real::" $data-path]
+$decimal-state-selection-expression -> +["decimal::" $data-path]
+
+# Arithmetic Expression
+$arithmetic-expression -> +[
+	'('
+	$space.* $numeric-expression +[
+	$space.+ $arithmetic-operator
+	$space.+ $numeric-expression].+
+	$space.* ')']
+$arithmetic-operator -> ?[ '**' '+' '-' '*' '/' '%']
+
+
+## Duration Expression
+$duration-expression -> ?[
+	$constant-duration-expression
+	$duration-arithmetic-expression]
+
+# Constant Duration
+$constant-duration-expression -> +["'D " ?[
+	$dtick-precision
+	$dsecond-precision
+	$dminute-precision
+	$dday-precision]
+	"'"]
+$dtick-precision -> +[$dsecond-precision '.' $millisecond]
+$dsecond-precision -> +[$dminute-precision ':' $second]
+$dminute-precision -> +[+[$dday-precision '.'].? $hour ':' $minute]
+$dday-precision -> /^\d+$/
+
+# Duration Arithmetic
+$duration-arithmetic-expression -> +[
+	'('
+	$space.* $duration-expression +[
+	$space.+ $duration-operator
+	$space.+ $duration-expression].+
+	$space.* ')']
+$duration-operator -> ?[ '+' '-']
+
+
+## Timestamp Expression
+$timestamp-expression -> ?[
+	$constant-timestamp-expression
+	$timestamp-state-selection-expression
+	$timestamp-arithmetic-expression]
+
+$constant-timestamp-expression -> +["'T " ?[
+	$now
+	$millisecond-precision $second-precision
+	$minute-precision $day-precision
+	$month-precision $year-precision]
+	"'"]
+$millisecond-precision -> +[
+	$year '-' $month '-' $day $date-delimiter
+	$hour ':' $minute ':' $second '.'
+	$millisecond $time-zone-offset]>12
+$second-precision -> +[
+	$year '-'
+	$month '-'
+	$day $date-delimiter
+	$hour ':' $minute ':' $second $time-zone-offset]>10
+$minute-precision -> +[
+	$year '-'
+	$month '-'
+	$day $date-delimiter
+	$hour ':' $minute $time-zone-offset]>7
+$day-precision -> +[
+	$year '-'
+	$month '-'
+	$day 
+	+[$date-delimiter $time-zone-offset.?].?]
+$month-precision -> +[
+	$year '-'
+	$month
+	+[$date-delimiter $time-zone-offset.?].?]
+$year-precision -> +[
+	$year
+	+[$date-delimiter $time-zone-offset.?].?]
+$time-zone-offset -> ?[$utc-offset $minute-precision-offset]
+$minute-precision-offset -> +[?['+' '-'] $hour ':' $minute]
+$utc-offset -> "Z"
+$date-delimiter -> "T"
+$year -> /^\d{4,}$/.4,+
+$month -> /^(01|02|03|04|05|06|07|08|09|10|11|12)$/.2,+
+$day -> /^(01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31)$/.2,+
+$hour -> /^(00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|20|21|22|23)$/.2,+
+$minute -> /^[0-5]\d$/.2,+
+$second -> /^[0-5]\d$/.2,+
+$millisecond -> /^\d{1,7}$/
+$now -> 'now'
+
+$timestamp-state-selection-expression -> +["time-stamp::" $data-path]
+
+# Temporal Arithmetic
+$timestamp-arithmetic-expression -> +[
+	'('
+	$space.* $timestamp-expression
+	$space.+ $timestamp-operator
+	$space.+ $duration-expression
+	$space.* ')']
+$timestamp-operator -> ?[ '+' '-']
+
+
+## Data Path
+# this should ideally be imported into this grammar from it's original grammar
+$data-path -> $path-segment.+
+
+# Path segment
+$path-segment -> +['/' ?[$property $index]]
+
+# property
+$property -> +[?[@qas $identifier $select-any] $optional.?]
+$identifier -> /^[a-zA-Z$]\w*\z/
+$select-any -> '*'
+$optional -> '?'
+
+# Index
+$index -> +['[' ?[$integer $select-any] ']' $optional.?]
+$integer -> +[$negative.? $digits]
+$negative -> '-'
+$digits -> /^\d+$/
+
+## Misc
+$space -> ' '

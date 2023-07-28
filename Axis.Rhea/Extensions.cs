@@ -1,4 +1,4 @@
-﻿using Axis.Luna.Common;
+﻿using Axis.Luna.Common.Results;
 using Axis.Luna.Extensions;
 using System;
 using System.Collections;
@@ -120,6 +120,16 @@ namespace Axis.Rhea.Core
             // items was empty
             if (pos == 0)
                 yield return value;
+        }
+
+        public static List<T> AddOrInsert<T>(this List<T> items, T item, int? index = null)
+        {
+            if (index is null || index >= items.Count)
+                items.Add(item);
+
+            else items[index.Value] = item;
+
+            return items;
         }
     }
 }

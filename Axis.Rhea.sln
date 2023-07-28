@@ -13,7 +13,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4C6C36A6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axis.Rhea.Core.Tests", "Axis.Rhea.Core.Tests\Axis.Rhea.Core.Tests.csproj", "{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.ActorSystem", "Axis.Rhea.ActorSystem\Axis.Rhea.ActorSystem.csproj", "{B0B67338-40F5-4207-BCEF-C985641E5E55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axis.Rhea.ActorSystem", "Axis.Rhea.ActorSystem\Axis.Rhea.ActorSystem.csproj", "{B0B67338-40F5-4207-BCEF-C985641E5E55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Shared.Contract", "Axis.Rhea.Shared.Contract\Axis.Rhea.Shared.Contract.csproj", "{AC9A6E8F-CB0E-4851-8AFD-44D1D0BD15FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Axis.Rhea.Directives.Contract", "Axis.Rhea.Directives.Contract\Axis.Rhea.Directives.Contract.csproj", "{9D0B66AB-63B6-489D-B8AB-0A7FA172D921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Shared.Contract.Tests", "Axis.Rhea.Shared.Contract.Tests\Axis.Rhea.Shared.Contract.Tests.csproj", "{34B71BE1-8100-4613-958C-D5D542E5D99F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Shared.Contract.Serializers.Newtonsoft", "Axis.Rhea.Shared.Contract.Serializers.Newtonsoft\Axis.Rhea.Shared.Contract.Serializers.Newtonsoft.csproj", "{9A97C0C5-655B-4CF0-B29E-5059B5D146AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Shared.Contract.Serializers.MSJson", "Axis.Rhea.shared.Contract.Serializers.MSJson\Axis.Rhea.Shared.Contract.Serializers.MSJson.csproj", "{6778F201-70D6-418B-8A8A-90715AB8DBC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared.Contract.Serializers", "Shared.Contract.Serializers", "{021FB9CF-E2B7-49E3-B08D-7F2D4E023170}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Directives.Contract.Serializers", "Directives.Contract.Serializers", "{FDABB2C8-2660-4763-8EE2-2A306138152F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Directives.Contract.Serializers.Newtonsoft", "Axis.Rhea.Directives.Contract.Serializers.Newtonsoft\Axis.Rhea.Directives.Contract.Serializers.Newtonsoft.csproj", "{38E07D99-71B4-44FE-B1A1-4A3B20FCB5BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Directives.Contract.Serializers.MSJson", "Axis.Rhea.Directives.Contract.Serializers.MSJson\Axis.Rhea.Directives.Contract.Serializers.MSJson.csproj", "{F0335EC2-96A9-44D8-ACFC-E92FE16EB84F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Directives.Contract.Serializers.Ion", "Axis.Rhea.Directives.Contract.Serializers.Ion\Axis.Rhea.Directives.Contract.Serializers.Ion.csproj", "{447309B0-BE9A-48FD-A65C-8A239B39A398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Axis.Rhea.Shared.Contract.Serializers.Ion", "Axis.Rhea.Shared.Contract.Serializers.Ion\Axis.Rhea.Shared.Contract.Serializers.Ion.csproj", "{FF9AE1B6-F707-47F5-A14C-598E7AB07156}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specs", "Specs", "{1AB31065-A1EA-4E5D-86E2-DF39B56FDFBD}"
+	ProjectSection(SolutionItems) = preProject
+		WorkflowJsonSpec.json = WorkflowJsonSpec.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +60,42 @@ Global
 		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0B67338-40F5-4207-BCEF-C985641E5E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC9A6E8F-CB0E-4851-8AFD-44D1D0BD15FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9A6E8F-CB0E-4851-8AFD-44D1D0BD15FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC9A6E8F-CB0E-4851-8AFD-44D1D0BD15FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9A6E8F-CB0E-4851-8AFD-44D1D0BD15FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D0B66AB-63B6-489D-B8AB-0A7FA172D921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D0B66AB-63B6-489D-B8AB-0A7FA172D921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D0B66AB-63B6-489D-B8AB-0A7FA172D921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D0B66AB-63B6-489D-B8AB-0A7FA172D921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B71BE1-8100-4613-958C-D5D542E5D99F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B71BE1-8100-4613-958C-D5D542E5D99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B71BE1-8100-4613-958C-D5D542E5D99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B71BE1-8100-4613-958C-D5D542E5D99F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A97C0C5-655B-4CF0-B29E-5059B5D146AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A97C0C5-655B-4CF0-B29E-5059B5D146AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A97C0C5-655B-4CF0-B29E-5059B5D146AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A97C0C5-655B-4CF0-B29E-5059B5D146AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6778F201-70D6-418B-8A8A-90715AB8DBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6778F201-70D6-418B-8A8A-90715AB8DBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6778F201-70D6-418B-8A8A-90715AB8DBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6778F201-70D6-418B-8A8A-90715AB8DBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E07D99-71B4-44FE-B1A1-4A3B20FCB5BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E07D99-71B4-44FE-B1A1-4A3B20FCB5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E07D99-71B4-44FE-B1A1-4A3B20FCB5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E07D99-71B4-44FE-B1A1-4A3B20FCB5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0335EC2-96A9-44D8-ACFC-E92FE16EB84F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0335EC2-96A9-44D8-ACFC-E92FE16EB84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0335EC2-96A9-44D8-ACFC-E92FE16EB84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0335EC2-96A9-44D8-ACFC-E92FE16EB84F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{447309B0-BE9A-48FD-A65C-8A239B39A398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447309B0-BE9A-48FD-A65C-8A239B39A398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447309B0-BE9A-48FD-A65C-8A239B39A398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447309B0-BE9A-48FD-A65C-8A239B39A398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9AE1B6-F707-47F5-A14C-598E7AB07156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9AE1B6-F707-47F5-A14C-598E7AB07156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9AE1B6-F707-47F5-A14C-598E7AB07156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9AE1B6-F707-47F5-A14C-598E7AB07156}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +104,18 @@ Global
 		{4A073707-08AD-4E68-A645-23E668093942} = {EB591738-BFED-44FC-AF1A-ADE951840139}
 		{50E89769-2E0C-4FE3-B940-7A7EAE47CC9D} = {4C6C36A6-A6CA-4F83-B663-FF3556C204F8}
 		{B0B67338-40F5-4207-BCEF-C985641E5E55} = {EB591738-BFED-44FC-AF1A-ADE951840139}
+		{AC9A6E8F-CB0E-4851-8AFD-44D1D0BD15FD} = {EB591738-BFED-44FC-AF1A-ADE951840139}
+		{9D0B66AB-63B6-489D-B8AB-0A7FA172D921} = {EB591738-BFED-44FC-AF1A-ADE951840139}
+		{34B71BE1-8100-4613-958C-D5D542E5D99F} = {4C6C36A6-A6CA-4F83-B663-FF3556C204F8}
+		{9A97C0C5-655B-4CF0-B29E-5059B5D146AD} = {021FB9CF-E2B7-49E3-B08D-7F2D4E023170}
+		{6778F201-70D6-418B-8A8A-90715AB8DBC4} = {021FB9CF-E2B7-49E3-B08D-7F2D4E023170}
+		{021FB9CF-E2B7-49E3-B08D-7F2D4E023170} = {EB591738-BFED-44FC-AF1A-ADE951840139}
+		{FDABB2C8-2660-4763-8EE2-2A306138152F} = {EB591738-BFED-44FC-AF1A-ADE951840139}
+		{38E07D99-71B4-44FE-B1A1-4A3B20FCB5BA} = {FDABB2C8-2660-4763-8EE2-2A306138152F}
+		{F0335EC2-96A9-44D8-ACFC-E92FE16EB84F} = {FDABB2C8-2660-4763-8EE2-2A306138152F}
+		{447309B0-BE9A-48FD-A65C-8A239B39A398} = {FDABB2C8-2660-4763-8EE2-2A306138152F}
+		{FF9AE1B6-F707-47F5-A14C-598E7AB07156} = {021FB9CF-E2B7-49E3-B08D-7F2D4E023170}
+		{1AB31065-A1EA-4E5D-86E2-DF39B56FDFBD} = {2C053A88-8B0C-49F1-9E57-BE507497E026}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76C7EE4D-E230-4CB9-B61F-0B49A3460106}

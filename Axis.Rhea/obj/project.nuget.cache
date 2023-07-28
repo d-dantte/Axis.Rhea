@@ -1,26 +1,25 @@
 {
   "version": 2,
-  "dgSpecHash": "vuVesONot/G/2bZJpA5doDU37TX3EDeAyfgzt0ATrdN/yyIdokN9NFpNm5MmDCNHZzDThBQR7j6dG2hpcAGGbQ==",
+  "dgSpecHash": "rijw6FHNJk4gWMuLMM8m/CM+KE6RrsvW5KPEtAuQh+VPYe4PXG0rpei9RtOYNtCGMPDqd/s04phMbsDnO/iSpQ==",
   "success": true,
   "projectFilePath": "C:\\Dantte\\Dev\\Repos\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\stanl\\.nuget\\packages\\axis.ion\\0.0.3\\axis.ion.0.0.3.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\axis.luna.common\\6.0.6\\axis.luna.common.6.0.6.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\axis.ion\\0.0.8\\axis.ion.0.0.8.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\axis.luna.common\\6.0.8-alpha-20230528-01\\axis.luna.common.6.0.8-alpha-20230528-01.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\axis.luna.extensions\\6.0.6\\axis.luna.extensions.6.0.6.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\axis.luna.finvoke\\6.0.6\\axis.luna.finvoke.6.0.6.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\axis.pulsar.grammar\\0.7.7\\axis.pulsar.grammar.0.7.7.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\axis.pulsar.languages\\0.7.7\\axis.pulsar.languages.0.7.7.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.codeanalysis.common\\4.5.0\\microsoft.codeanalysis.common.4.5.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.5.0\\microsoft.codeanalysis.csharp.4.5.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.codeanalysis.csharp.scripting\\4.5.0\\microsoft.codeanalysis.csharp.scripting.4.5.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.codeanalysis.scripting.common\\4.5.0\\microsoft.codeanalysis.scripting.common.4.5.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\sigil\\5.0.0\\sigil.5.0.0.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\system.reflection.metadata\\6.0.1\\system.reflection.metadata.6.0.1.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512"
+    "C:\\Users\\stanl\\.nuget\\packages\\system.configuration.configurationmanager\\7.0.0\\system.configuration.configurationmanager.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\system.diagnostics.eventlog\\7.0.0\\system.diagnostics.eventlog.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\system.drawing.common\\7.0.0\\system.drawing.common.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\system.runtime.caching\\7.0.0\\system.runtime.caching.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\system.security.cryptography.protecteddata\\7.0.0\\system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\system.security.permissions\\7.0.0\\system.security.permissions.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }

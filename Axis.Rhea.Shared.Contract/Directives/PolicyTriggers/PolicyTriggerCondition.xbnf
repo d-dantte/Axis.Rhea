@@ -1,0 +1,30 @@
+# Defines logical grouping of conditions
+# 1. # represents status code
+# 2. @ represents response code
+# 3. $ represents error title (without a label, it represents the presence of an error)
+# 4. % represents a fault
+#
+
+$trigger-condition -> ?[$condition-group $match-expression]
+
+# Condition Groups
+$condition-group -> ?[$and $or $xor $not]
+$and -> +['[' $space.* $trigger-condition +[$space.* ',' $space.* $trigger-condition].* $space.* ']']
+$or -> +['(' $space.* $trigger-condition +[$space.* ',' $space.* $trigger-condition].* $space.* ')']
+$xor -> +['{' $space.* $trigger-condition $space.* ',' $space.* $trigger-condition $space.* '}']
+$not -> +['!' $trigger-condition]
+
+
+# Match Expression
+$match-expression -> ?[$status-code-exp $response-code-exp $error-exp $fault-exp]
+$status-code-exp -> +['#' $positive-integer]
+$response-code-exp -> +['@' $identifier]
+$error-exp -> +['$' $title-text.?]
+$fault-exp -> +['%' $identifier.?]
+$title-text -> @qet
+
+
+# Misc
+$space -> ' '
+$positive-integer -> /^\d+$/
+$identifier -> /^[a-zA-Z]\w*$/

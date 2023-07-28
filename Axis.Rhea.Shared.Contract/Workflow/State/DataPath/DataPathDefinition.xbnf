@@ -1,0 +1,29 @@
+# Defines a unix-file-path-like declarative representation of object graphs.
+#
+# /abcd/efgh/[4]/xyz
+# /abcd/ggt
+#
+
+# Paths
+$paths -> +[$new-line.? $path +[$new-line $path].*]
+$new-line -> +[$r.? $n]
+$r -> '\r'
+$n -> '\n'
+
+# Path
+$path -> $path-segment.+
+
+# Path segment
+$path-segment -> +['/' ?[$property $index]]
+
+# roperty
+$property -> +[?[@qas $identifier $select-any] $optional.?]
+$identifier -> /^[a-zA-Z$]\w*\z/
+$select-any -> '*'
+$optional -> '?'
+
+# Index
+$index -> +['[' ?[$integer $select-any] ']' $optional.?]
+$integer -> +[$negative.? $digits]
+$negative -> '-'
+$digits -> /^\d+$/
