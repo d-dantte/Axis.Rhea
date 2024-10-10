@@ -24,11 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Axis.Ion" Version="0.0.8" />
-    <PackageReference Include="Axis.Luna.Common" Version="6.0.8-alpha-20230528-01" />
-    <PackageReference Include="Axis.Luna.Extensions" Version="6.0.6" />
-    <PackageReference Include="Axis.Pulsar.Grammar" Version="0.7.7" />
-    <PackageReference Include="Axis.Pulsar.Languages" Version="0.7.7" />
+    <PackageReference Include="Axis.Luna.Common" Version="6.0.22" />
+    <PackageReference Include="Axis.Luna.Extensions" Version="6.0.23" />
+    <PackageReference Include="Axis.Pulsar.Grammar" Version="0.7.18" />
+    <PackageReference Include="Axis.Pulsar.Languages" Version="0.7.18" />
     <PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
   </ItemGroup>
 

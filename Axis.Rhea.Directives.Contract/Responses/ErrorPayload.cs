@@ -1,4 +1,4 @@
-﻿using Axis.Ion.Types;
+﻿using Axis.Dia.Types;
 using Axis.Luna.Extensions;
 
 namespace Axis.Rhea.Directives.Contract.Responses;
@@ -16,7 +16,7 @@ public record ErrorPayload : IResponsePayload, IStatusCoded
 
     public string Detail { get; }
 
-    public IonStruct? ErrorData { get; }
+    public RecordValue? ErrorData { get; }
 
 
     public ErrorPayload(
@@ -24,7 +24,7 @@ public record ErrorPayload : IResponsePayload, IStatusCoded
         int statusCode,
         string title,
         string detail,
-        IonStruct? errorData = null)
+        RecordValue? errorData = null)
     {
         CorrelationId = correlationId.ThrowIf(
             string.IsNullOrWhiteSpace,

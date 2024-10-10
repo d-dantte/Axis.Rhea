@@ -1,4 +1,5 @@
-﻿using Axis.Ion.Types;
+﻿using Axis.Dia.Contracts;
+using Axis.Dia.Types;
 using Axis.Luna.Common.Results;
 using Axis.Rhea.Shared.Contract.Workflow.State.DataTree;
 
@@ -25,7 +26,7 @@ namespace Axis.Rhea.Shared.Contract.Workflow.State
         /// </summary>
         /// <param name="state"></param>
         /// <returns></returns>
-        public bool IsValidState(IonStruct state) => Validate(state) is IResult<IonStruct>.DataResult;
+        public bool IsValidState(RecordValue state) => Validate(state) is IResult<RecordValue>.DataResult;
 
         /// <summary>
         /// This is essentially the same as pruning, the only difference being rather than creating new values when 
@@ -33,7 +34,7 @@ namespace Axis.Rhea.Shared.Contract.Workflow.State
         /// </summary>
         /// <param name="state"></param>
         /// <returns></returns>
-        public IResult<IonStruct> Validate(IonStruct state)
+        public IResult<RecordValue> Validate(RecordValue state)
         {
             try
             {
@@ -43,41 +44,40 @@ namespace Axis.Rhea.Shared.Contract.Workflow.State
             }
             catch(Exception ex)
             {
-                return Result.Of<IonStruct>(ex);
+                return Result.Of<RecordValue>(ex);
             }
         }
 
-        private static bool IsValid(DataTreeNode node, IIonType ion)
+        private static bool IsValid(DataTreeNode node, IDiaValue value)
         {
             if (node is null)
                 throw new ArgumentNullException(nameof(node));
 
-            if (ion is null)
-                throw new ArgumentNullException(nameof(ion));
+            if (value is null)
+                throw new ArgumentNullException(nameof(value));
 
-            return (node.Homogeneity, ion) switch
+            return (node.Homogeneity, value) switch
             {
                 (NodeHomogeneity.Empty, _) => true,
-                (NodeHomogeneity.Items, IonList list) => IsListValid(node, list),
-                (NodeHomogeneity.Items, IonSexp sexp) => IsSexpValid(node, sexp),
-                (NodeHomogeneity.Properties, IonStruct @struct) => IsStructValid(node, @struct),
+                (NodeHomogeneity.Items, ListValue list) => IsListValid(node, list),
+                (NodeHomogeneity.Properties, RecordValue @struct) => IsStructValid(node, @struct),
                 (NodeHomogeneity.NonHomogeneous, _) => throw new ArgumentException($"Invalid homogeneity: {NodeHomogeneity.NonHomogeneous}"),
                 _ => throw new InvalidOperationException($"Invalid argument combination")
             };
         }
 
-        private static bool IsListValid(DataTreeNode node, IonList ion)
+        private static bool IsListValid(DataTreeNode node, ListValue value)
         {
-            if (ion.IsNull)
+            if (value.IsNull)
                 return false;
 
             if (node.SelectsAll())
             {
-                if (ion.Count == 0)
+                if (value.Count == 0)
                     return false;
 
                 var allNode = node.Children.First();
-                return ion.Value!.All(value => IsValid(allNode, value));
+                return value.Value!.All(value => IsValid(allNode, value));
             }
 
             return node.Children
@@ -85,52 +85,29 @@ namespace Axis.Rhea.Shared.Contract.Workflow.State
                 .All(itemNode =>
                     !itemNode.IsRequired
                     ||(itemNode.Index >= 0
-                    && itemNode.Index < ion.Count
-                    && IsValid(itemNode, ion.Value![itemNode.Index!.Value])));
+                    && itemNode.Index < value.Count
+                    && IsValid(itemNode, value.Value![itemNode.Index!.Value])));
         }
 
-        private static bool IsSexpValid(DataTreeNode node, IonSexp ion)
+        private static bool IsStructValid(DataTreeNode node, RecordValue value)
         {
-            if (ion.IsNull)
+            if (value.IsNull)
                 return false;
 
             if (node.SelectsAll())
             {
-                if (ion.Count == 0)
+                if (value.Value!.Length == 0)
                     return false;
 
                 var allNode = node.Children.First();
-                return ion.Value!.All(value => IsValid(allNode, value));
-            }
-
-            return node.Children
-                .SelectAs<ItemNode>()
-                .All(itemNode =>
-                    !itemNode.IsRequired
-                    || (itemNode.Index >= 0
-                    && itemNode.Index < ion.Count
-                    && IsValid(itemNode, ion.Value![itemNode.Index!.Value])));
-        }
-
-        private static bool IsStructValid(DataTreeNode node, IonStruct ion)
-        {
-            if (ion.IsNull)
-                return false;
-
-            if (node.SelectsAll())
-            {
-                if (ion.Value!.Length == 0)
-                    return false;
-
-                var allNode = node.Children.First();
-                return ion.Value!.All(value => IsValid(allNode, value.Value));
+                return value.Value!.All(value => IsValid(allNode, value.Value));
             }
 
             return node.Children
                 .SelectAs<PropertyNode>()
                 .All(propertyNode =>
                     !propertyNode.IsRequired
-                    ||(ion.Properties.TryGetvalue(propertyNode.Property!, out var value)
+                    ||(value.TryGetvalue(propertyNode.Property!, out var value)
                     && IsValid(propertyNode, value!)));
         }
     }

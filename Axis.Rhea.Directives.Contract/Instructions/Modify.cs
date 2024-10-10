@@ -1,4 +1,4 @@
-﻿using Axis.Ion.Types;
+﻿using Axis.Dia.Contracts;
 using Axis.Luna.Extensions;
 
 namespace Axis.Rhea.Directives.Contract.Instructions;
@@ -18,12 +18,12 @@ public record Modify : IMutationInstruction
     /// <summary>
     /// the mutation payload
     /// </summary>
-    public IIonType Payload { get; }
+    public IDiaValue Payload { get; }
 
     private Modify(
         MutationAction action,
         string dataPathSelector,
-        IIonType payload)
+        IDiaValue payload)
     {
         Action = action;
         Payload = payload ?? throw new ArgumentNullException(nameof(payload));
@@ -34,11 +34,11 @@ public record Modify : IMutationInstruction
 
     public static Modify Append(
         string dataPathSelector,
-        IIonType payload)
+        IDiaValue payload)
         => new Modify(MutationAction.Append, dataPathSelector, payload);
 
     public static Modify Replace(
         string dataPathSelector,
-        IIonType payload)
+        IDiaValue payload)
         => new Modify(MutationAction.Replace, dataPathSelector, payload);
 }

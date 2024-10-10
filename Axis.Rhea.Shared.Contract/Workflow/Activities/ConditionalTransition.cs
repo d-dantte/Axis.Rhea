@@ -1,4 +1,4 @@
-﻿using Axis.Ion.Types;
+﻿using Axis.Dia.Types;
 using Axis.Luna.Extensions;
 using Axis.Rhea.Shared.Contract.StateExpressions;
 using System.Collections.Immutable;
@@ -15,9 +15,9 @@ public record ConditionalTransition: IActivity
     /// <summary>
     /// 
     /// </summary>
-    public ImmutableList<(ITypedExpression<IonBool> Expression, string Activity)> Conditions { get; }
+    public ImmutableList<(ITypedExpression<BoolValue> Expression, string Activity)> Conditions { get; }
 
-    public ConditionalTransition(string name, params (ITypedExpression<IonBool> Expression, string activity)[] conditions)
+    public ConditionalTransition(string name, params (ITypedExpression<BoolValue> Expression, string activity)[] conditions)
     {
         Name = name.ThrowIf(
             string.IsNullOrWhiteSpace,
@@ -31,7 +31,7 @@ public record ConditionalTransition: IActivity
             .ToImmutableList();
     }
 
-    private static bool IsInvalidPair((ITypedExpression<IonBool> expression, string activity) pair)
+    private static bool IsInvalidPair((ITypedExpression<BoolValue> expression, string activity) pair)
     {
         if (pair.expression is null)
             return true;

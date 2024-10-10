@@ -73,7 +73,10 @@ public static class PolicyTriggerParser
     private static IRetryPolicyTriggerCondition ExtractTriggerCondition(CSTNode triggerConditionNode)
     {
         var query = $"{ConditionGroupSymbol}|{MatchExpressionSymbol}";
-        var conditionNode = triggerConditionNode.FindNode(query);
+        var conditionNode = triggerConditionNode
+            .FindNodes(query)
+            .FirstOrThrow(new InvalidOperationException($"Invalid trigger condition: {triggerConditionNode.TokenValue()}"));
+
         return conditionNode.SymbolName switch
         {
             ConditionGroupSymbol => ExtractConditionGroup(conditionNode),
@@ -106,7 +109,8 @@ public static class PolicyTriggerParser
                 .ApplyTo(conditions => new Xor(conditions[0], conditions[1])),
 
             NotSymbol => group
-                .FindNode(TriggerConditionSymbol)
+                .FindNodes(TriggerConditionSymbol)
+                .FirstOrThrow(new InvalidOperationException($"Invalid symbol: {group.SymbolName}"))
                 .ApplyTo(ExtractTriggerCondition)
                 .ApplyTo(condition => new NotTrigger(condition)),
 
@@ -120,25 +124,29 @@ public static class PolicyTriggerParser
         return group.SymbolName switch
         {
             StatusCodeExpSymbol => group
-                .FindNode(IntegerSymbol)
+                .FindNodes(IntegerSymbol)
+                .FirstOrThrow(new InvalidOperationException($"Invalid symbol: {group.SymbolName}"))
                 .ApplyTo(node => node.TokenValue())
                 .ApplyTo(int.Parse)
                 .ApplyTo(code => new StatusCodeTrigger(code)),
 
             ResponseCodeExpSymbol => group
-                .FindNode(IdentifierSymbol)
+                .FindNodes(IdentifierSymbol)
+                .FirstOrThrow(new InvalidOperationException($"Invalid symbol: {group.SymbolName}"))
                 .ApplyTo(node => node.TokenValue())
                 .ApplyTo(code => new ResponseCodeTrigger(code)),
 
             ErrorExpSymbol => group
-                .FindNode(TitleTextSymbol)
+                .FindNodes(TitleTextSymbol)
+                .FirstOrThrow(new InvalidOperationException($"Invalid symbol: {group.SymbolName}"))
                 .ApplyTo(node => node?.TokenValue().UnwrapFrom("'"))
                 .ApplyTo(title => title is null
                     ? (IRetryPolicyTriggerCondition)ErrorPayloadTrigger.Instance
                     : new ErrorTitleTrigger(title)),
 
             FaultExpSymbol => group
-                .FindNode(IdentifierSymbol)
+                .FindNodes(IdentifierSymbol)
+                .FirstOrThrow(new InvalidOperationException($"Invalid symbol: {group.SymbolName}"))
                 .ApplyTo(node => node?.TokenValue())
                 .ApplyTo(type => type is null
                     ? (IRetryPolicyTriggerCondition)FaultPayloadTrigger.Instance

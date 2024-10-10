@@ -11,8 +11,8 @@ public partial record StateMutation
     {
         Instructions = instructions
             .ThrowIfNull(new ArgumentNullException(nameof(instructions)))
-            .ThrowIf(
-                instructions => instructions.Any(i => i is null),
+            .ThrowIfAny(
+                i => i is null,
                 new ArgumentException("Null instruction found in the instructins list"))
             .ToImmutableList();
     }

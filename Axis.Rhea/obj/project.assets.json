@@ -2,26 +2,26 @@
   "version": 3,
   "targets": {
     "net7.0": {
-      "Axis.Ion/0.0.8": {
+      "Axis.Dia/0.0.1": {
         "type": "package",
         "dependencies": {
-          "Axis.Luna.Common": "6.0.8-alpha-20230528-01",
-          "Axis.Luna.Extensions": "6.0.6",
-          "Axis.Luna.FInvoke": "6.0.6",
-          "Axis.Pulsar.Grammar": "0.7.7",
-          "Axis.Pulsar.Languages": "0.7.7"
+          "Axis.Luna.Common": "6.0.22",
+          "Axis.Luna.Extensions": "6.0.23",
+          "Axis.Luna.FInvoke": "6.0.22",
+          "Axis.Pulsar.Grammar": "0.7.18",
+          "Axis.Pulsar.Languages": "0.7.18"
         },
         "compile": {
-          "lib/net7.0/Axis.Ion.dll": {}
+          "lib/net7.0/Axis.Dia.dll": {}
         },
         "runtime": {
-          "lib/net7.0/Axis.Ion.dll": {}
+          "lib/net7.0/Axis.Dia.dll": {}
         }
       },
-      "Axis.Luna.Common/6.0.8-alpha-20230528-01": {
+      "Axis.Luna.Common/6.0.22": {
         "type": "package",
         "dependencies": {
-          "Axis.Luna.Extensions": "6.0.6"
+          "Axis.Luna.Extensions": "6.0.22"
         },
         "compile": {
           "lib/net7.0/Axis.Luna.Common.dll": {}
@@ -30,7 +30,7 @@
           "lib/net7.0/Axis.Luna.Common.dll": {}
         }
       },
-      "Axis.Luna.Extensions/6.0.6": {
+      "Axis.Luna.Extensions/6.0.23": {
         "type": "package",
         "compile": {
           "lib/net7.0/Axis.Luna.Extensions.dll": {}
@@ -39,7 +39,7 @@
           "lib/net7.0/Axis.Luna.Extensions.dll": {}
         }
       },
-      "Axis.Luna.FInvoke/6.0.6": {
+      "Axis.Luna.FInvoke/6.0.22": {
         "type": "package",
         "dependencies": {
           "Sigil": "5.0.0"
@@ -51,10 +51,10 @@
           "lib/net7.0/Axis.Luna.FInvoke.dll": {}
         }
       },
-      "Axis.Pulsar.Grammar/0.7.7": {
+      "Axis.Pulsar.Grammar/0.7.18": {
         "type": "package",
         "dependencies": {
-          "Axis.Luna.Common": "6.0.6"
+          "Axis.Luna.Common": "6.0.18"
         },
         "compile": {
           "lib/net7.0/Axis.Pulsar.Grammar.dll": {}
@@ -63,10 +63,10 @@
           "lib/net7.0/Axis.Pulsar.Grammar.dll": {}
         }
       },
-      "Axis.Pulsar.Languages/0.7.7": {
+      "Axis.Pulsar.Languages/0.7.18": {
         "type": "package",
         "dependencies": {
-          "Axis.Pulsar.Grammar": "0.7.7"
+          "Axis.Pulsar.Grammar": "0.7.18"
         },
         "compile": {
           "lib/net7.0/Axis.Pulsar.Languages.dll": {}
@@ -290,9 +290,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "Axis.Ion": "0.0.8",
-          "Axis.Luna.Common": "6.0.8-alpha-20230528-01",
-          "Axis.Luna.Extensions": "6.0.6"
+          "Axis.Dia": "0.0.1",
+          "Axis.Luna.Common": "6.0.22",
+          "Axis.Luna.Extensions": "6.0.23"
         },
         "compile": {
           "bin/placeholder/Axis.Rhea.Directives.Contract.dll": {}
@@ -305,10 +305,11 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "Axis.Luna.Common": "6.0.8-alpha-20230528-01",
-          "Axis.Luna.Extensions": "6.0.6",
-          "Axis.Pulsar.Grammar": "0.7.7",
-          "Axis.Pulsar.Languages": "0.7.7",
+          "Axis.Dia": "0.0.1",
+          "Axis.Luna.Common": "6.0.22",
+          "Axis.Luna.Extensions": "6.0.23",
+          "Axis.Pulsar.Grammar": "0.7.18",
+          "Axis.Pulsar.Languages": "0.7.18",
           "Axis.Rhea.Directives.Contract": "1.0.0",
           "System.Runtime.Caching": "7.0.0"
         },
@@ -322,77 +323,77 @@
     }
   },
   "libraries": {
-    "Axis.Ion/0.0.8": {
-      "sha512": "WSckc+OQ6Pgh/WsCVIwfkyMQy7/tsVnnivvWL4vR23ezqkTK6lwr7PYKMs14WKWOB+lW/jFrKJHIPYN2Go2+dA==",
+    "Axis.Dia/0.0.1": {
+      "sha512": "gryfs7TC0aJ8CeNANtKG3zy5Ct7jne6Pyb3MH5+wOYSVyh0W1gtm0FTXWMcsXKbbYPB+guzmZy5IdIv/y4dm1Q==",
       "type": "package",
-      "path": "axis.ion/0.0.8",
+      "path": "axis.dia/0.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "axis.ion.0.0.8.nupkg.sha512",
-        "axis.ion.nuspec",
-        "axis.ion.readme.md",
-        "lib/net7.0/Axis.Ion.dll"
+        "README.md",
+        "axis.dia.0.0.1.nupkg.sha512",
+        "axis.dia.nuspec",
+        "lib/net7.0/Axis.Dia.dll"
       ]
     },
-    "Axis.Luna.Common/6.0.8-alpha-20230528-01": {
-      "sha512": "K6X9LB+2+2GhXuyTO5Yv16OZ1th4uc7BP/vDsdUTwV5GkZMr4QFUVQ0hKURswlUVO7RnKj8CiuDF+5pfjIeOUQ==",
+    "Axis.Luna.Common/6.0.22": {
+      "sha512": "BFSLffTDePbd3/BgFPLMdI5Ht4MmDVLAuhAyP8xA9DLngTysfCw15QMITnuBUG19gCm41oXAHgZyFfo/wkUEZQ==",
       "type": "package",
-      "path": "axis.luna.common/6.0.8-alpha-20230528-01",
+      "path": "axis.luna.common/6.0.22",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "axis.luna.common.6.0.8-alpha-20230528-01.nupkg.sha512",
+        "axis.luna.common.6.0.22.nupkg.sha512",
         "axis.luna.common.nuspec",
         "axis.luna.common.readme.md",
         "lib/net7.0/Axis.Luna.Common.dll"
       ]
     },
-    "Axis.Luna.Extensions/6.0.6": {
-      "sha512": "u3Q3KZ33KcxIDs/Ov7eX9pXUNP4V9hGRVo7cUo2ur7P11GP3T5ltq098tIkpGVr8LcFwkZO2KEjCH9rzUt6KMg==",
+    "Axis.Luna.Extensions/6.0.23": {
+      "sha512": "HFbPgIqinrAxs0cwT8iUmh2kbCMeDa5C+cQiObWuhvwLWlwxC0slrm7cB9ZMsod4W3dAUQdkVkdflNP7yaW9Fw==",
       "type": "package",
-      "path": "axis.luna.extensions/6.0.6",
+      "path": "axis.luna.extensions/6.0.23",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "axis.luna.extensions.6.0.6.nupkg.sha512",
+        "axis.luna.extensions.6.0.23.nupkg.sha512",
         "axis.luna.extensions.nuspec",
         "lib/net7.0/Axis.Luna.Extensions.dll"
       ]
     },
-    "Axis.Luna.FInvoke/6.0.6": {
-      "sha512": "QM7mLgKLjma/OexmWDYx7IkvaY6yUNFTJNs7WBU3r6Pqqcne4Jf42xc7WJaAnVVOqKTkB43FU5syVKIqoNBBBA==",
+    "Axis.Luna.FInvoke/6.0.22": {
+      "sha512": "3lWkrsjRJlqD91qppPc4epm6GNnjNOvecaF6rN+wVjW8i32VD2Wn8U7PvU9Wm4K2PlhMbYXhl9mo3dTT6McGXQ==",
       "type": "package",
-      "path": "axis.luna.finvoke/6.0.6",
+      "path": "axis.luna.finvoke/6.0.22",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "axis.luna.finvoke.6.0.6.nupkg.sha512",
+        "axis.luna.finvoke.6.0.22.nupkg.sha512",
         "axis.luna.finvoke.nuspec",
         "lib/net7.0/Axis.Luna.FInvoke.dll"
       ]
     },
-    "Axis.Pulsar.Grammar/0.7.7": {
-      "sha512": "c/hR4k+QfwtuWYR0sO1dqnU58pXKVIAbiHbXo8KB+DqFqb078XvgvCEmCWCEJQN2ekOC1kGdKSvx96EngC9JpA==",
+    "Axis.Pulsar.Grammar/0.7.18": {
+      "sha512": "gAAPWt9XZvWLDv7kzGaa9F0+Pyik/qkdL8xoRwT4Ocvqi7wH6mDP/YETabng2OTyKjQ5vx0QDnypTwos9iRaBg==",
       "type": "package",
-      "path": "axis.pulsar.grammar/0.7.7",
+      "path": "axis.pulsar.grammar/0.7.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "axis.pulsar.grammar.0.7.7.nupkg.sha512",
+        "axis.pulsar.grammar.0.7.18.nupkg.sha512",
         "axis.pulsar.grammar.nuspec",
         "axis.pulsar.grammar.readme.md",
         "lib/net7.0/Axis.Pulsar.Grammar.dll"
       ]
     },
-    "Axis.Pulsar.Languages/0.7.7": {
-      "sha512": "2GEAK4mM+kXzGty+6TfngdzRDfCwwb2pQTfqqLTgHHQuNTs4UI11G7BcSen/+FMLg1RL9iJdNl6RpscQ/n6gwA==",
+    "Axis.Pulsar.Languages/0.7.18": {
+      "sha512": "mTXqSo8djmvscIDAc+VUtM1yx2J2wZL/R9bS8liILgokK+T70tPLGrxXMnXIe9YHM9QphhBRvu4ylQu9kwC33w==",
       "type": "package",
-      "path": "axis.pulsar.languages/0.7.7",
+      "path": "axis.pulsar.languages/0.7.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "axis.pulsar.languages.0.7.7.nupkg.sha512",
+        "axis.pulsar.languages.0.7.18.nupkg.sha512",
         "axis.pulsar.languages.nuspec",
         "axis.pulsar.languages.readme.md",
         "lib/net7.0/Axis.Pulsar.Languages.dll"
@@ -708,11 +709,10 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Axis.Ion >= 0.0.8",
-      "Axis.Luna.Common >= 6.0.8-alpha-20230528-01",
-      "Axis.Luna.Extensions >= 6.0.6",
-      "Axis.Pulsar.Grammar >= 0.7.7",
-      "Axis.Pulsar.Languages >= 0.7.7",
+      "Axis.Luna.Common >= 6.0.22",
+      "Axis.Luna.Extensions >= 6.0.23",
+      "Axis.Pulsar.Grammar >= 0.7.18",
+      "Axis.Pulsar.Languages >= 0.7.18",
       "Axis.Rhea.Directives.Contract >= 1.0.0",
       "Axis.Rhea.Shared.Contract >= 1.0.0",
       "System.Collections.Immutable >= 7.0.0"
@@ -770,25 +770,21 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
-          "Axis.Ion": {
-            "target": "Package",
-            "version": "[0.0.8, )"
-          },
           "Axis.Luna.Common": {
             "target": "Package",
-            "version": "[6.0.8-alpha-20230528-01, )"
+            "version": "[6.0.22, )"
           },
           "Axis.Luna.Extensions": {
             "target": "Package",
-            "version": "[6.0.6, )"
+            "version": "[6.0.23, )"
           },
           "Axis.Pulsar.Grammar": {
             "target": "Package",
-            "version": "[0.7.7, )"
+            "version": "[0.7.18, )"
           },
           "Axis.Pulsar.Languages": {
             "target": "Package",
-            "version": "[0.7.7, )"
+            "version": "[0.7.18, )"
           },
           "System.Collections.Immutable": {
             "target": "Package",

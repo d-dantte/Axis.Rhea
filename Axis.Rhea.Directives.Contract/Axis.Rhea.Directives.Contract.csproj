@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Axis.Ion" Version="0.0.8" />
-    <PackageReference Include="Axis.Luna.Common" Version="6.0.8-alpha-20230528-01" />
-    <PackageReference Include="Axis.Luna.Extensions" Version="6.0.6" />
+    <PackageReference Include="Axis.Dia" Version="0.0.1" />
+    <PackageReference Include="Axis.Luna.Common" Version="6.0.22" />
+    <PackageReference Include="Axis.Luna.Extensions" Version="6.0.23" />
   </ItemGroup>
 
 </Project>
