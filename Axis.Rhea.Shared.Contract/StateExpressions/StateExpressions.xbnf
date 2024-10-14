@@ -28,7 +28,7 @@ $bool-state-selection-expression -> +["bool::" $data-path]
 # Type Check
 $state-selection-typecheck-expression -> +['$' ?[
 	$bool-state-selection-expression
-	$int-state-selection-expression
+	$int-state-selection-expressionWee
 	$float-state-selection-expression
 	$decimal-state-selection-expression
 	$timestamp-state-selection-expression

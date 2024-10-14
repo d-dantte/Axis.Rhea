@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Axis.Dia.Core" Version="0.0.3" />
+    <PackageReference Include="Axis.Dia.PathQuery" Version="0.0.3" />
+    <PackageReference Include="Axis.Luna.Common" Version="7.0.9" />
+    <PackageReference Include="Axis.Luna.Extensions" Version="7.0.9" />
+    <PackageReference Include="Axis.Luna.Result" Version="7.0.9" />
+    <PackageReference Include="Semver" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Axis.Rhae.Shared.Contract\Axis.Rhae.Shared.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

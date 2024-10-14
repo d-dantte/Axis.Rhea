@@ -9,7 +9,7 @@ namespace Axis.Rhea.Shared.Contract.Workflow.State.DataTree;
 /// Represents a node in the object graph.
 /// <para>
 /// Each node may have 0 or more children. Where a node has children, they must all be of the same type. This means that a node either
-/// represents a struct - where items are mapped to property-names, or a list - where items are mapped to indexs.
+/// represents a struct - where items are mapped to property-names, or a list - where items are mapped to indexes.
 /// </para>
 /// </summary>
 public abstract record DataTreeNode

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <RootNamespace>Axis.Rhae.Contract</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Axis.Dia.Core" Version="0.0.3" />
+    <PackageReference Include="Axis.Dia.PathQuery" Version="0.0.3" />
+    <PackageReference Include="Semver" Version="2.3.0" />
+  </ItemGroup>
+
+</Project>

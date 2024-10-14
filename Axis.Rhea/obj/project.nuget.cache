@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XDJE9PtJtd7coIuLWF7ykMLgY07Hp6gpI+x5OlEnUIw8u3zv6X+pHz+OEWRTKK/nyRJgaYJtvbCyho0Nx6/eJw==",
+  "dgSpecHash": "FEYawWA5AgU=",
   "success": true,
-  "projectFilePath": "C:\\Dantte\\Dev\\Repos\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
+  "projectFilePath": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stanl\\.nuget\\packages\\axis.dia\\0.0.1\\axis.dia.0.0.1.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\axis.luna.common\\6.0.22\\axis.luna.common.6.0.22.nupkg.sha512",
@@ -19,7 +19,10 @@
     "C:\\Users\\stanl\\.nuget\\packages\\system.runtime.caching\\7.0.0\\system.runtime.caching.7.0.0.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\system.security.cryptography.protecteddata\\7.0.0\\system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
     "C:\\Users\\stanl\\.nuget\\packages\\system.security.permissions\\7.0.0\\system.security.permissions.7.0.0.nupkg.sha512",
-    "C:\\Users\\stanl\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
+    "C:\\Users\\stanl\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.20\\microsoft.windowsdesktop.app.ref.7.0.20.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.20\\microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "C:\\Users\\stanl\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.20\\microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512"
   ],
   "logs": []
 }
