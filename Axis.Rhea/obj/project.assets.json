@@ -719,23 +719,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\stanl\\.nuget\\packages\\": {},
+    "C:\\Users\\Stanley.Damasus\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
+      "projectUniqueName": "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
       "projectName": "Axis.Rhea.Core",
-      "projectPath": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
-      "packagesPath": "C:\\Users\\stanl\\.nuget\\packages\\",
-      "outputPath": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea\\obj\\",
+      "projectPath": "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea\\Axis.Rhea.Core.csproj",
+      "packagesPath": "C:\\Users\\Stanley.Damasus\\.nuget\\packages\\",
+      "outputPath": "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\stanl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Stanley.Damasus\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -745,17 +745,19 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://sita-pse.pkgs.visualstudio.com/_packaging/SmartPath/nuget/v3/index.json": {},
+        "https://sita-pse.pkgs.visualstudio.com/_packaging/shared-libraries/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea.Directives.Contract\\Axis.Rhea.Directives.Contract.csproj": {
-              "projectPath": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea.Directives.Contract\\Axis.Rhea.Directives.Contract.csproj"
+            "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea.Directives.Contract\\Axis.Rhea.Directives.Contract.csproj": {
+              "projectPath": "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea.Directives.Contract\\Axis.Rhea.Directives.Contract.csproj"
             },
-            "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea.Shared.Contract\\Axis.Rhea.Shared.Contract.csproj": {
-              "projectPath": "C:\\Dantte\\Dev\\Repos\\Axis\\Axis.Rhea\\Axis.Rhea.Shared.Contract\\Axis.Rhea.Shared.Contract.csproj"
+            "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea.Shared.Contract\\Axis.Rhea.Shared.Contract.csproj": {
+              "projectPath": "C:\\Repos\\Others\\Axis.Rhea\\Axis.Rhea.Shared.Contract\\Axis.Rhea.Shared.Contract.csproj"
             }
           }
         }
@@ -807,26 +809,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.20, 7.0.20]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.20, 7.0.20]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.20, 7.0.20]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.306\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   }

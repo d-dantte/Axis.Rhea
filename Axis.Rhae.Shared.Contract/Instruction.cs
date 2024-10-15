@@ -12,22 +12,22 @@ namespace Axis.Rhae.Contract
 
         required public IDiaValue? Data { get; init; }
 
-        public bool TryValidate(out ValidationResult[] validationException)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
             var errors = new List<ValidationResult>();
 
             if (Path is null)
-                errors.Add(new ValidationResult($"'{nameof(Path)}' is null"));
+                errors.Add(new ValidationResult($"Invalid '{nameof(Path)}': null"));
 
             if (!Enum.IsDefined(ActionType))
-                errors.Add(new ValidationResult($"'{nameof(ActionType)}' is not a defined enum"));
+                errors.Add(new ValidationResult($"Invalid '{nameof(ActionType)}': not a defined enum"));
 
             if (Type.Modify.Equals(ActionType) && Data is null)
                 errors.Add(new ValidationResult(
-                    $"Non-null '{nameof(Data)}' expected when '{nameof(ActionType)}' is {Type.Modify}"));
+                    $"Invalid '{nameof(Data)}': non-null expected when '{nameof(ActionType)}' is {Type.Modify}"));
 
-            validationException = [.. errors];
-            return validationException.IsEmpty();
+            validationResults = [.. errors];
+            return validationResults.IsEmpty();
         }
 
         #region Nested types

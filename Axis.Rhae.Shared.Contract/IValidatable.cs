@@ -8,9 +8,9 @@ namespace Axis.Rhae.Contract
         /// <summary>
         /// Validates the entity, returning false and any errors detected, if presenet, else returning true.
         /// </summary>
-        /// <param name="validationException"></param>
+        /// <param name="validationResults">Empty if the validation returns true, otherwise contains the validation error results</param>
         /// <returns>True if valid, false otherwise</returns>
-        bool TryValidate(out ValidationResult[] validationException);
+        bool IsValid(out ValidationResult[] validationResults);
     }
 
     public static class ValidatableExtensions
@@ -22,9 +22,9 @@ namespace Axis.Rhae.Contract
         {
             ArgumentNullException.ThrowIfNull(validatable);
 
-            if (!validatable.TryValidate(out var errors))
+            if (!validatable.IsValid(out var errors))
                 throw errors
-                    .Select(error => new ValidationException(error.ErrorMessage))
+                    .Select(error => new validationResults(error.ErrorMessage))
                     .ApplyTo(_errors => new AggregateException(_errors.ToArray()));
         }
     }

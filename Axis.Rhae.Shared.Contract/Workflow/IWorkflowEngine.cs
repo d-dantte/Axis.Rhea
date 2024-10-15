@@ -15,14 +15,14 @@ namespace Axis.Rhae.Contract.Workflow
         /// </summary>
         /// <param name="request">The request instance</param>
         /// <returns>The response</returns>
-        Task<Response<Identifier<Identifiers.Workflow>>> StartWorkflow(Request<StartWorkflowPayload> request);
+        Task<Response<Identifier<Identifiers.Workflow>>> StartWorkflow(Request<StartWorkflow> request);
 
         /// <summary>
         /// Restarts a new workflow.
         /// </summary>
         /// <param name="request">The request instance</param>
         /// <returns>The response</returns>
-        Task<Response<Identifier<Identifiers.Workflow>>> RetryWorkflow(Request<RetryWorkflowPayload> request);
+        Task<Response<Identifier<Identifiers.Workflow>>> RetryWorkflow(Request<RetryWorkflow> request);
 
         #region Status Modifiers
         /// <summary>
@@ -52,7 +52,7 @@ namespace Axis.Rhae.Contract.Workflow
         /// </summary>
         /// <param name="request">The request instance</param>
         /// <returns>The response</returns>
-        Task<Response<Identifier<Identifiers.Workflow>>> SkipToActivity(Request<ActivitySkipPayload> request);
+        Task<Response<Identifier<Identifiers.Workflow>>> SkipToActivity(Request<SkipActivity> request);
 
         /// <summary>
         /// 
@@ -66,7 +66,7 @@ namespace Axis.Rhae.Contract.Workflow
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<Response<WorkflowStatus>> GetWorkflowStatus(Request<Identifier<Identifiers.Workflow>> request);
+        Task<Response<WorkflowStatusInfo>> GetWorkflowStatus(Request<Identifier<Identifiers.Workflow>> request);
 
         /// <summary>
         /// 

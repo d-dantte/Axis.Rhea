@@ -7,10 +7,9 @@ namespace Axis.Rhae.Contract.Audit
     /// Timeline event, recorded by the timeline
     /// </summary>
     public record TimelineEvent :
-        ICorrelatable,
         IValidatable
     {
-        required public Guid CorrelationId{ get; init; }
+        required public Guid EventId{ get; init; }
 
         /// <summary>
         /// Timestamp for the event
@@ -27,18 +26,18 @@ namespace Axis.Rhae.Contract.Audit
         /// </summary>
         public EventType EventType => Payload.EventType;
 
-        public bool TryValidate(out ValidationResult[] validationException)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
             var errors = new List<ValidationResult>();
 
             if (Payload is null)
-                errors.Add(new ValidationResult($"{nameof(Payload)} is null"));
+                errors.Add(new ValidationResult($"Invalid '{nameof(Payload)}': null"));
 
-            else if (!Payload.TryValidate(out var payloadErrors))
+            else if (!Payload.IsValid(out var payloadErrors))
                 errors.AddRange(payloadErrors);
 
-            validationException = [.. errors];
-            return validationException.IsEmpty();
+            validationResults = [.. errors];
+            return validationResults.IsEmpty();
         }
     }
 }

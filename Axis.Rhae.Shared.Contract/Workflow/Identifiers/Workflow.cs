@@ -45,7 +45,7 @@
             => ToIdentifier(@namespace, name, version, instanceId, alias);
     }
 
-    public static class WorkflowInstanceExtension
+    public static class WorkflowExtension
     {
         public static IDMetadata Split(this Identifier<Workflow> fqn)
         {

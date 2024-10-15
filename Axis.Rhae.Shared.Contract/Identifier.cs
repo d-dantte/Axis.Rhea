@@ -84,9 +84,9 @@ namespace Axis.Rhae.Contract
         }
         #endregion
 
-        public bool TryValidate(out ValidationResult[] validationException)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
-            validationException = [];
+            validationResults = [];
             return true;
         }
     }

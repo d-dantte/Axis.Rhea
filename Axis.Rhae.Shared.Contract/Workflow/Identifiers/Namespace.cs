@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Axis.Rhae.Contract.Workflow.Identifiers
 {
@@ -12,6 +13,30 @@ namespace Axis.Rhae.Contract.Workflow.Identifiers
         {
             ArgumentNullException.ThrowIfNull(text);
             return Pattern.IsMatch(text);
+        }
+
+        public static Identifier<Namespace> ToIdentifier(params string[] @namespace)
+        {
+            ArgumentNullException.ThrowIfNull(@namespace);
+
+            return @namespace
+                .Aggregate(
+                    new StringBuilder(),
+                    (sb, next) => sb.Append('.').Append(next))
+                .ToString();
+        }
+    }
+
+    public static class NamespaceExtensions
+    {
+        public static string[] Split(this Identifier<Namespace> identifier)
+        {
+            if (identifier.IsDefault)
+                throw new ArgumentException("Invalid identifier: null");
+
+            return identifier
+                .ToString()
+                .Split('.');
         }
     }
 }

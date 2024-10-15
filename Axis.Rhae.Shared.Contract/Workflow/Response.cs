@@ -15,21 +15,21 @@ namespace Axis.Rhae.Contract.Workflow
 
         required public object Value { get; init; }
 
-        public bool TryValidate(out ValidationResult[] validationException)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
             var errors = new List<ValidationResult>();
 
             if (Value is null)
-                errors.Add(new ValidationResult($"'{nameof(Value)}' is null"));
+                errors.Add(new ValidationResult($"Invalid '{nameof(Value)}': null"));
 
             if (Value is not IValidatable)
-                errors.Add(new ValidationResult($"'{nameof(Value)}' is not an '{nameof(IValidatable)}' instance"));
+                errors.Add(new ValidationResult($"Invalid '{nameof(Value)}': expected instance of '{nameof(IValidatable)}'"));
 
-            else if (!Value.As<IValidatable>().TryValidate(out var payloadErrors))
+            else if (!Value.As<IValidatable>().IsValid(out var payloadErrors))
                 errors.AddRange(payloadErrors);
 
-            validationException = [.. errors];
-            return validationException.IsEmpty();
+            validationResults = [.. errors];
+            return validationResults.IsEmpty();
         }
     }
 }

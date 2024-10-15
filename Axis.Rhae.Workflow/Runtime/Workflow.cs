@@ -1,6 +1,7 @@
 ﻿using Axis.Dia.Core.Types;
 using Axis.Luna.Extensions;
 using Axis.Rhae.Contract;
+using Axis.Rhae.Contract.Workflow;
 using Axis.Rhae.Contract.Workflow.Identifiers;
 using Axis.Rhae.Workflow.Audit;
 using Axis.Rhae.Workflow.Definition;
