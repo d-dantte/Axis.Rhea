@@ -1,5 +1,5 @@
-﻿namespace Axis.Rhae.Contract
-{ 
+﻿namespace Axis.Rhae.Contract.Workflow
+{
     public enum WorkflowStatus
     {
         /// <summary>
@@ -25,6 +25,11 @@
         /// <summary>
         /// Workflow has been forced to stop due to internal errors.
         /// </summary>
-        Errored
+        Errored,
+
+        /// <summary>
+        /// Workflow has concluded.
+        /// </summary>
+        Ended
     }
 }

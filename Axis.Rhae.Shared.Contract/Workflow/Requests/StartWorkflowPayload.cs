@@ -1,4 +1,5 @@
-﻿using Axis.Rhae.Contract.Workflow.Identifiers;
+﻿using Axis.Luna.Extensions;
+using Axis.Rhae.Contract.Workflow.Identifiers;
 using Semver;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,28 +13,21 @@ namespace Axis.Rhae.Contract.Workflow.Requests
 
         required public SemVersion Version { get; init; }
 
-        public bool TryValidate(out AggregateException? validationException)
+        public bool TryValidate(out ValidationResult[] validationResults)
         {
-            validationException = null;
-            var errors = new List<ValidationException>();
+            var errors = new List<ValidationResult>();
 
             if (Name.IsDefault)
-                errors.Add(new ValidationException("Invalid name: default"));
+                errors.Add(new ValidationResult("Invalid name: default"));
 
             if (Namespace.IsDefault)
-                errors.Add(new ValidationException("Invalid namespace: default"));
+                errors.Add(new ValidationResult("Invalid namespace: default"));
 
             if (Version is null)
-                errors.Add(new ValidationException("Invalid version: null"));
+                errors.Add(new ValidationResult("Invalid version: null"));
 
-            if (errors.Count == 0)
-                return true;
-
-            else
-            {
-                validationException = new AggregateException([.. errors]);
-                return false;
-            }
+            validationResults = [.. errors];
+            return validationResults.IsEmpty();
         }
     }
 }

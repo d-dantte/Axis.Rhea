@@ -1,22 +1,24 @@
 ﻿using Axis.Dia.Core.Types;
-using Axis.Luna.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Axis.Rhae.Contract.Service
 {
-    public class Request : ICorrelatable
+    public class Request :
+        ICorrelatable,
+        IValidatable
     {
-        public Guid CorrelationId { get; }
+        required public Guid CorrelationId { get; init; }
 
-        public Record Payload { get; }
+        /// <summary>
+        /// This is either the entire workflow-data at the time the call was made, or the a pruned version
+        /// based off the <c>StateSelector</c>
+        /// </summary>
+        required public Record Payload { get; init; }
 
-        public Request(Guid correlationId, Record payload)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
-            CorrelationId = correlationId;
-            Payload = payload.ThrowIfDefault(
-                _ => new ArgumentException("Invalid payload: default"));
+            validationResults = [];
+            return true;
         }
-
-        public Request(Record payload) : this(Guid.NewGuid(), payload)
-        { }
     }
 }

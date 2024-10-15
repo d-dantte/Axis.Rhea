@@ -10,7 +10,7 @@ namespace Axis.Rhae.Contract
         IResultParsable<Identifier<TPattern>>,
         IEquatable<Identifier<TPattern>>,
         IValidatable
-        where TPattern : IIdentifierPattern
+        where TPattern : IIdentifierPattern<TPattern>
     {
         private readonly string value;
 
@@ -84,9 +84,9 @@ namespace Axis.Rhae.Contract
         }
         #endregion
 
-        public bool TryValidate(out ValidationResult[] validationException)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
-            validationException = [];
+            validationResults = [];
             return true;
         }
     }

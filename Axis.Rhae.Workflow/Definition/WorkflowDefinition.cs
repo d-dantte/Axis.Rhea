@@ -1,4 +1,5 @@
-﻿using Axis.Luna.Extensions;
+﻿using Axis.Dia.Core.Types;
+using Axis.Luna.Extensions;
 using Axis.Rhae.Contract;
 using Axis.Rhae.Contract.Workflow.Identifiers;
 using Axis.Rhae.Workflow.Definition.Activity;
@@ -23,17 +24,23 @@ namespace Axis.Rhae.Workflow.Definition
 
         public Identifier<Identifiers.Activity> StartActivity { get; }
 
+        public Record DefaultData { get; }
+
         public WorkflowDefinition(
             Identifier<Namespace> @namespace,
             Identifier<Name> name,
             SemVersion version,
             Identifier<Identifiers.Activity> startActivity,
+            Record defaultData,
             params (Identifier<Identifiers.Activity> ActivityId, IActivityDefinition Definition)[] activities)
         {
             Namespace = @namespace;
             Name = name;
             Version = version;
             StartActivity = startActivity;
+
+            DefaultData = defaultData.ThrowIfDefault(
+                _ => new ArgumentException($"Invalid data: default"));
 
             Activities = activities
                 .ThrowIfNull(() => new ArgumentNullException(nameof(activities)))

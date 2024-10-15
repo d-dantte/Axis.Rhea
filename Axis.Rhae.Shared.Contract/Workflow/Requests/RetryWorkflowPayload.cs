@@ -1,4 +1,6 @@
-﻿namespace Axis.Rhae.Contract.Workflow.Requests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Axis.Rhae.Contract.Workflow.Requests
 {
     public class RetryWorkflowPayload : IValidatable
     {
@@ -6,7 +8,7 @@
 
         // TODO: other properties will come here
 
-        public bool TryValidate(out AggregateException? validationException)
+        public bool TryValidate(out ValidationResult[] validationException)
         {
             throw new NotImplementedException();
         }

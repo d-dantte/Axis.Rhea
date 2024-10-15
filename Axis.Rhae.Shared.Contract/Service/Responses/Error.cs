@@ -1,7 +1,7 @@
 ﻿using Axis.Luna.Extensions;
 using System.ComponentModel.DataAnnotations;
 
-namespace Axis.Rhae.Contract.Workflow.Responses
+namespace Axis.Rhae.Contract.Service.Responses
 {
     public class Error : IValidatable
     {

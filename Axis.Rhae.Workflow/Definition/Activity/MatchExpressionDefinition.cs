@@ -17,8 +17,8 @@ namespace Axis.Rhae.Workflow.Definition.Activity
     #endregion
 
     /// <summary>
-    /// Represents an expression based on the context-data, that resolves to a string. The resolved value is used to find the next activity to transition to
-    /// from the transition table.
+    /// Represents an expression based on the context-data, that resolves to a string. The resolved value is used to find the
+    /// next activity to transition to from the transition table.
     /// </summary>
     public class MatchExpressionDefinition : BaseActivityDefinition
     {

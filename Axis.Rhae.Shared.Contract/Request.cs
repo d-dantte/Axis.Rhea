@@ -1,30 +1,28 @@
-﻿
 using Axis.Luna.Extensions;
 using System.ComponentModel.DataAnnotations;
 
-namespace Axis.Rhae.Contract.Workflow
+namespace Axis.Rhae.Contract
 {
     public record Request<TPayload> :
         ICorrelatable,
         IValidatable
-        where TPayload : IValidatable
     {
         required public Guid CorrelationId { get; init; }
 
         required public TPayload Payload { get; init; }
 
-        public bool TryValidate(out ValidationResult[] validationException)
+        public bool IsValid(out ValidationResult[] validationResults)
         {
             var errors = new List<ValidationResult>();
 
             if (Payload is null)
-                errors.Add(new ValidationResult($"'{nameof(Payload)}' is null"));
+                errors.Add(new ValidationResult($"Invalid '{nameof(Payload)}': null"));
 
-            else if (!Payload.TryValidate(out var payloadErrors))
+            else if (Payload is IValidatable payload && !payload.TryValidate(out var payloadErrors))
                 errors.AddRange(payloadErrors);
 
-            validationException = [.. errors];
-            return validationException.IsEmpty();
+            validationResults = [.. errors];
+            return validationResults.IsEmpty();
         }
     }
 }

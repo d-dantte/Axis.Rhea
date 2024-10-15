@@ -2,7 +2,7 @@
 
 namespace Axis.Rhae.Contract.Workflow.Identifiers
 {
-    public class Activity : IIdentifierPattern
+    public class Activity : IIdentifierPattern<Activity>
     {
         public static readonly Regex Pattern = new(
             "^[a-zA-Z_][a-zA-Z0-9_-]*$",

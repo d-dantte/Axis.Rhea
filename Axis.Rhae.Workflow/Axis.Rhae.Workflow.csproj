@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Axis.Dia.Core" Version="0.0.3" />
-    <PackageReference Include="Axis.Dia.PathQuery" Version="0.0.3" />
-    <PackageReference Include="Axis.Luna.Common" Version="7.0.9" />
-    <PackageReference Include="Axis.Luna.Extensions" Version="7.0.9" />
-    <PackageReference Include="Axis.Luna.Result" Version="7.0.9" />
-    <PackageReference Include="Semver" Version="2.3.0" />
+    <PackageReference Include="Axis.Dia.Core" Version="0.0.6" />
+    <PackageReference Include="Axis.Dia.PathQuery" Version="0.0.6" />
+    <PackageReference Include="Axis.Luna.Common" Version="7.0.10" />
+    <PackageReference Include="Axis.Luna.Extensions" Version="7.0.10" />
+    <PackageReference Include="Axis.Luna.Result" Version="7.0.10" />
+    <PackageReference Include="Semver" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -12,14 +12,6 @@ namespace Axis.Rhae.Workflow.Audit
         /// The events, in chronological order
         /// </summary>
         ImmutableArray<TimelineEvent> Events { get; }
-
-        /// <summary>
-        /// Notifies the timeline of an event
-        /// </summary>
-        /// <param name="payload">The event payload</param>
-        /// <param name="message">The event message</param>
-        /// <returns>The timeline event</returns>
-        TimelineEvent Notify(IEventPayload payload, string message);
     }
 
     /// <summary>

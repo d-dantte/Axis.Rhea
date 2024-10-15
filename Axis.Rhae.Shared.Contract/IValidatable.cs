@@ -1,4 +1,4 @@
-﻿using Axis.Luna.Extensions;
+using Axis.Luna.Extensions;
 using System.ComponentModel.DataAnnotations;
 
 namespace Axis.Rhae.Contract
@@ -8,9 +8,9 @@ namespace Axis.Rhae.Contract
         /// <summary>
         /// Validates the entity, returning false and any errors detected, if presenet, else returning true.
         /// </summary>
-        /// <param name="validationException"></param>
+        /// <param name="validationResults"></param>
         /// <returns>True if valid, false otherwise</returns>
-        bool TryValidate(out ValidationResult[] validationException);
+        bool TryValidate(out ValidationResult[] validationResults);
     }
 
     public static class ValidatableExtensions
@@ -22,9 +22,9 @@ namespace Axis.Rhae.Contract
         {
             ArgumentNullException.ThrowIfNull(validatable);
 
-            if (!validatable.TryValidate(out var errors))
+            if (!validatable.IsValid(out var errors))
                 throw errors
-                    .Select(error => new ValidationException(error.ErrorMessage))
+                    .Select(error => new validationResults(error.ErrorMessage))
                     .ApplyTo(_errors => new AggregateException(_errors.ToArray()));
         }
     }

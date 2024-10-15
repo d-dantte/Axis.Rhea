@@ -1,5 +1,6 @@
 ﻿namespace Axis.Rhae.Contract.Workflow.Identifiers
 {
+    using Axis.Luna.Result;
     using Semver;
     using System.Text.RegularExpressions;
     using IDMetadata = (
@@ -9,7 +10,10 @@
         Guid InstanceId,
         string? Alias);
 
-    public class Workflow : IIdentifierPattern
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Workflow : IIdentifierPattern<Workflow>
     {
         internal static readonly string UnboundedAliasPattern = "[a-zA-Z_][a-zA-Z0-9_-]*";
         internal static readonly string UnboundedGuidPattern = "[0-9A-F]{8}[-]?(?:[0-9A-F]{4}[-]?){3}[0-9A-F]{12}";
@@ -42,10 +46,20 @@
             SemVersion version,
             Guid instanceId,
             string? alias = null)
-            => ToIdentifier(@namespace, name, version, instanceId, alias);
+            => ToIdentifier((@namespace, name, version, instanceId, alias));
+
+        public static bool TryParse(string text, out IResult<Workflow> result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IResult<Workflow> Parse(string text)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public static class WorkflowInstanceExtension
+    public static class WorkflowExtension
     {
         public static IDMetadata Split(this Identifier<Workflow> fqn)
         {

@@ -1,9 +1,12 @@
-﻿namespace Axis.Rhae.Contract
+﻿using Axis.Luna.Result;
+
+namespace Axis.Rhae.Contract
 {
     /// <summary>
     /// Defines the predicate for validating texts that conform to a given pattern.
     /// </summary>
-    public interface IIdentifierPattern
+    public interface IIdentifierPattern<TSelf>
+        where TSelf : IIdentifierPattern<TSelf>
     {
         static abstract bool IsValidPattern(string text);
     }
