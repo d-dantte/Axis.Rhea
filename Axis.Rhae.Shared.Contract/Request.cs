@@ -18,7 +18,7 @@ namespace Axis.Rhae.Contract
             if (Payload is null)
                 errors.Add(new ValidationResult($"Invalid '{nameof(Payload)}': null"));
 
-            else if (Payload is IValidatable payload && !payload.TryValidate(out var payloadErrors))
+            else if (!Payload.IsValid(out var payloadErrors))
                 errors.AddRange(payloadErrors);
 
             validationResults = [.. errors];

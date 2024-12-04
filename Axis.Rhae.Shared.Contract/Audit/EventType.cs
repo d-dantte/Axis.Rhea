@@ -9,28 +9,15 @@ namespace Axis.Rhae.Contract.Audit
 
         #region Invocation
         /// <summary>
-        /// Captures information about the execution of a 
+        /// Captures information about the execution of a <see cref="Definition.ServiceDirective.IInvocationDefinition"/>
         /// </summary>
         ServiceInvocation,
 
+        #region Invocation
         /// <summary>
         /// Captures information about starting a new "child" workflow from an active workflow
         /// </summary>
         WorkflowInvocation,
-        #endregion
-
-        #region Service Event Sink
-        /// <summary>
-        /// Captures information about the event received by a service sink activity
-        /// </summary>
-        ServiceSinkNotification,
-        #endregion
-
-        #region Workflow/Timeline Event
-        /// <summary>
-        /// Captures information about the event received by a workflow from it's child workflow
-        /// </summary>
-        WorkflowEventNotification,
         #endregion
 
         #region Misc

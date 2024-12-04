@@ -8,9 +8,9 @@ namespace Axis.Rhae.Contract
         /// <summary>
         /// Validates the entity, returning false and any errors detected, if presenet, else returning true.
         /// </summary>
-        /// <param name="validationResults"></param>
+        /// <param name="validationResults">Empty if the validation returns true, otherwise contains the validation error results</param>
         /// <returns>True if valid, false otherwise</returns>
-        bool TryValidate(out ValidationResult[] validationResults);
+        bool IsValid(out ValidationResult[] validationResults);
     }
 
     public static class ValidatableExtensions
